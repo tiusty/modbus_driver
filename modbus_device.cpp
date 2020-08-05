@@ -6,7 +6,6 @@
 #include <string>
 
 
-
 int ModbusDevice::init(const std::string &device_port, int slave_number, std::string &device_name, int baud_rate, char parity, int data_bits, int stop_bits) {
     // Set device name
     device_name_ = device_name;
@@ -26,8 +25,16 @@ int ModbusDevice::init(const std::string &device_port, int slave_number, std::st
 //    }
 
     if (modbus_connect(mb_) == -1) {
-        fprintf(stderr, "Mdo: %s\n", modbus_strerror(errno));
+        fprintf(stderr, "Modbus connection failed for device %s: %s\n", device_name_.c_str(),  modbus_strerror(errno));
+        return -1;
     }
 
     return 0;
+}
+
+ModbusDevice::~ModbusDevice() {
+    if (mb_ != nullptr) {
+        modbus_close(mb_);
+        modbus_free(mb_);
+    }
 }

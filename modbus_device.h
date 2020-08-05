@@ -8,6 +8,7 @@
 class ModbusDevice {
 public:
     int init(const std::string &device_port, int slave_number, std::string &device_name, int baud_rate = 9600, char parity = 'N', int data_bits = 8, int stop_bits = 1);
+    ~ModbusDevice();
 private:
     modbus_t *mb_;
     std::string device_name_;
