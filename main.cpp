@@ -4,11 +4,17 @@
 
 int main() {
     modbus_t *mb;
+    modbus_t *tb;
     uint16_t tab_reg[32];
 
     mb = modbus_new_rtu("/dev/ttyS6", 9600, 'N', 8, 1);
     if (mb == NULL) {
         fprintf(stderr, "Unable to create the libmodbus context\n");
+        return -1;
+    }
+    tb = modbus_new_rtu("/dev/ttyS6", 9600, 'N', 8, 1);
+    if (tb == NULL) {
+        fprintf(stderr, "Unable to create the libmodbus context 2\n");
         return -1;
     }
     int rc = modbus_set_slave(mb, 1);
