@@ -12,7 +12,7 @@ int main() {
     ModbusDriver driver;
 
     // Initialize the desired devices
-//    driver.initialize_device(AquaTroll500, "/dev/ttyS3", "Aqua Troll 500", 12000);
+//    driver.initialize_device(aqua_troll_500, "/dev/ttyS3", "Aqua Troll 500", 12000);
     driver.initialize_device(arudino, "/dev/ttyS6", "Arudino");
 
     // Write a value to the arduino
