@@ -1,5 +1,4 @@
-Compiling for WSL 
---------------------------------------------
+# Compiling for WSL 
 WSL = (Windows Subsystem for Linux)
 
 1. Install WSl from the Microsoft store in Windows 10.
@@ -18,11 +17,11 @@ WSL = (Windows Subsystem for Linux)
 6. Now the modbus library should be installed and the program can be compiled/run
 
 
-Notes
------
-When running from WSL on a windows 10 machine, the comm ports are accessible via WSl. The pattern goes as follows:
-COMM1 = /dev/ttyS1
-COMM2 = /dev/ttyS2
-COMM3 = /dev/ttyS3
-etc...
-i.e the comm ports are mapped to the /dev/ttyS* serial ports
+## Notes
+When running from WSL on a windows 10 machine, the com ports are accessible via WSl.   
+The pattern goes as follows:  
+COM1 = /dev/ttyS1  
+COM2 = /dev/ttyS2  
+COM3 = /dev/ttyS3  
+etc...  
+i.e the com ports are mapped to the /dev/ttyS* serial ports  
