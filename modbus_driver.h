@@ -5,8 +5,6 @@
 
 class ModbusDriver {
 public:
-    int initialize_device(ModbusDevice &device, const std::string &device_port, const std::string &device_name, int baud_rate = 9600, char parity = 'N', int data_bits = 8, int stop_bits = 1);
-    void write(ModbusDevice &device, int location, int value);
 private:
     int number_of_added_devices_ = 1;
 };
