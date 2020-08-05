@@ -1,10 +1,12 @@
 #include <iostream>
 
 #include "modbus_device.h"
+#include "modbus_driver.h"
 
 int main() {
     ModbusDevice Arudino;
-    Arudino.init("/dev/ttyS6", 1, "Arudino");
+    ModbusDriver driver;
+    driver.initialize_device(Arudino, "/dev/ttyS6", "Arudino");
     Arudino.write(1,0);
 
 

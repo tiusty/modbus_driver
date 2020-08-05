@@ -10,9 +10,9 @@ public:
     int init(const std::string &device_port, int slave_number, const std::string &device_name, int baud_rate = 9600, char parity = 'N', int data_bits = 8, int stop_bits = 1);
     void write(int value, int location);
     ~ModbusDevice();
-private:
-    modbus_t *mb_;
     std::string device_name_;
+    modbus_t *mb_;
+private:
 };
 
 
