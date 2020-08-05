@@ -4,7 +4,7 @@
 #include "modbus_driver.h"
 
 int main() {
-    // Declare the evices
+    // Declare the devices
     ModbusDevice arudino;
     ModbusDevice aqua_troll_500;
 
