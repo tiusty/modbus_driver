@@ -7,7 +7,7 @@ int main() {
     ModbusDevice Arudino;
     ModbusDriver driver;
     driver.initialize_device(Arudino, "/dev/ttyS6", "Arudino");
-    Arudino.write(1,0);
+    driver.write(Arudino, 0,0);
 
 
     return 0;

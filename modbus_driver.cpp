@@ -31,3 +31,8 @@ int ModbusDriver::initialize_device(ModbusDevice &device, const std::string &dev
     number_of_added_devices_++;
     return 0;
 }
+
+void ModbusDriver::write(ModbusDevice &device, int location, int value)
+{
+    modbus_write_register(device.mb_, location, value);
+}
