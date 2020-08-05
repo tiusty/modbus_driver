@@ -4,10 +4,19 @@
 #include "modbus_driver.h"
 
 int main() {
-    ModbusDevice Arudino;
+    // Declare the evices
+    ModbusDevice arudino;
+    ModbusDevice aqua_troll_500;
+
+    // Declare the driver
     ModbusDriver driver;
-    driver.initialize_device(Arudino, "/dev/ttyS6", "Arudino");
-    driver.write(Arudino, 0,0);
+
+    // Initialize the desired devices
+//    driver.initialize_device(AquaTroll500, "/dev/ttyS3", "Aqua Troll 500", 12000);
+    driver.initialize_device(arudino, "/dev/ttyS6", "Arudino");
+
+    // Write a value to the arduino
+    driver.write(arudino, 0,0);
 
 
     return 0;

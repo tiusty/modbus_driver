@@ -34,5 +34,9 @@ int ModbusDriver::initialize_device(ModbusDevice &device, const std::string &dev
 
 void ModbusDriver::write(ModbusDevice &device, int location, int value)
 {
+    if (modbus_write_register(device.mb_, location, value) == -1)
+    {
+        fprintf(stderr, "Modbus Write Register fail for deivce %s: %s\n", device.device_name_.c_str(),  modbus_strerror(errno));
+    }
     modbus_write_register(device.mb_, location, value);
 }
