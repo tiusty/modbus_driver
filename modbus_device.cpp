@@ -6,7 +6,7 @@
 #include <string>
 
 
-int ModbusDevice::init(const std::string &device_port, int slave_number, std::string &device_name, int baud_rate, char parity, int data_bits, int stop_bits) {
+int ModbusDevice::init(const std::string &device_port, int slave_number, const std::string &device_name, int baud_rate, char parity, int data_bits, int stop_bits) {
     // Set device name
     device_name_ = device_name;
 
@@ -30,6 +30,11 @@ int ModbusDevice::init(const std::string &device_port, int slave_number, std::st
     }
 
     return 0;
+}
+
+void ModbusDevice::write(int value, int location)
+{
+    modbus_write_register(mb_, location, value);
 }
 
 ModbusDevice::~ModbusDevice() {
