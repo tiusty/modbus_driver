@@ -1,7 +1,3 @@
-//
-// Created by Alex on 8/5/2020.
-//
-
 #include "modbus_device.h"
 
 int ModbusDevice::init(const std::string &device_port, const std::string &device_name, int slave_number, int baud_rate, char parity, int data_bits, int stop_bits)
@@ -19,10 +15,7 @@ int ModbusDevice::init(const std::string &device_port, const std::string &device
     // Set the slave ID
     modbus_set_slave(mb_, slave_number);
 
-//    if (modbus_rtu_set_serial_mode(mb, MODBUS_RTU_RS485) == -1) {
-//        fprintf(stderr, "Connection failed: %s\n", modbus_strerror(errno));
-//    }
-
+    // Establish a Modbus Connection
     if (modbus_connect(mb_) == -1) {
         fprintf(stderr, "Modbus connection failed for device %s: %s\n", device_name_.c_str(),  modbus_strerror(errno));
         return -1;
@@ -34,6 +27,7 @@ int ModbusDevice::init(const std::string &device_port, const std::string &device
 
 int ModbusDevice::write_to_register(int location, int value)
 {
+    // Attempt to write the value at the register location
     if (modbus_write_register(mb_, location, value) == -1)
     {
         fprintf(stderr, "Modbus Write Register fail for deivce %s: %s\n", device_name_.c_str(),  modbus_strerror(errno));
