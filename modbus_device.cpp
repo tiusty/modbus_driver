@@ -22,12 +22,10 @@ int ModbusDevice::init(const std::string &device_port, const std::string &device
         return -1;
     }
 
-    uint16_t tab_reg[64];
-    if (modbus_read_registers(mb_, 5451, 2, tab_reg) == -1)
-    {
-        fprintf(stderr, "Modbus read register failed %s: %s\n", device_name_.c_str(),  modbus_strerror(errno));
-        return -1;
-    }
+
+    // This read register is just to wake up the Aqua Troll, the results can be ignored
+    uint16_t tab_reg[1];
+    modbus_read_registers(mb_, 1, 1, tab_reg);
 
     return 0;
 }

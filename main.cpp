@@ -14,7 +14,7 @@ int main() {
 
     // Write a value to the devices
 //    aqua_troll_500.write_to_register(5451,0);
-    aqua_troll_500.read_from_register(45451, 2);
+    aqua_troll_500.read_from_register(5451, 2);
 //    aqua_troll_500.write_to_register(0,0);
 
 
