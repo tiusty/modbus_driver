@@ -22,6 +22,13 @@ int ModbusDevice::init(const std::string &device_port, const std::string &device
         return -1;
     }
 
+    uint16_t tab_reg[64];
+    if (modbus_read_registers(mb_, 5451, 2, tab_reg) == -1)
+    {
+        fprintf(stderr, "Modbus read register failed %s: %s\n", device_name_.c_str(),  modbus_strerror(errno));
+        return -1;
+    }
+
     return 0;
 }
 
