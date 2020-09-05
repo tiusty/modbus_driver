@@ -1,4 +1,5 @@
 #include "modbus_device.h"
+#include <bitset>
 
 int ModbusDevice::init(const std::string &device_port, const std::string &device_name, int slave_number, int baud_rate, char parity, int data_bits, int stop_bits)
 {
@@ -33,6 +34,24 @@ int ModbusDevice::write_to_register(int location, int value)
         fprintf(stderr, "Modbus Write Register fail for deivce %s: %s\n", device_name_.c_str(),  modbus_strerror(errno));
         return -1;
     }
+
+    return 0;
+}
+
+int ModbusDevice::read_from_register(int address, int number_of_registers)
+{
+    uint16_t tab_reg[64];
+    tab_reg[0] = 0;
+    tab_reg[1] = 0;
+
+    if (modbus_read_registers(mb_, address, number_of_registers, tab_reg) == -1)
+    {
+        fprintf(stderr, "Modbus read register failed %s: %s\n", device_name_.c_str(),  modbus_strerror(errno));
+        return -1;
+    }
+
+    std::cout << tab_reg[0] << "return value" << std::endl;
+    std::cout << tab_reg[1] << "return value" << std::endl;
 
     return 0;
 }

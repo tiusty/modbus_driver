@@ -4,6 +4,7 @@
 
 #include <modbus/modbus.h>
 #include <string>
+#include <iostream>
 
 class ModbusDevice {
     /**
@@ -43,6 +44,8 @@ public:
      * @return 0 if success, -1 otherwise
      */
     int write_to_register(int location, int value);
+
+    int read_from_register(int address, int number_of_registers);
 
     /**
      * Defined destructor to free memory when program terminates
