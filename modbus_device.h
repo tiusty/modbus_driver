@@ -46,9 +46,25 @@ public:
      */
     int write_to_register(int location, int value);
 
+    /**
+     * Reads a sequential list of registers starting at the desired address. The number of registers can be
+     *  specified though the array should be long enough to support the desire amount of registers
+     * @tparam N The size of the passed in array
+     * @param address The start address of where to start reading registers from
+     * @param number_of_registers The number of registers to read
+     * @param tab_reg The array that will store the results from the read registers
+     * @return 0 if success, -1 if fail
+     */
     template <size_t N>
     int read_from_register(int address, int number_of_registers, std::array<uint16_t, N> &tab_reg)
     {
+        // Simple check to make sure the array can hold the amount of desired registers
+        if (number_of_registers > tab_reg.max_size())
+        {
+            std::cout << "Number of registers should be less than or equal to the length of the array" << std::endl;
+            return -1;
+        }
+
         // Read the registers from the device
         int rc = modbus_read_registers(mb_, address, number_of_registers, tab_reg.data());
 
@@ -68,7 +84,17 @@ public:
 
     }
 
+    /**
+     * This function is used when a 32bit float register is desired to be read
+     * @param address The first 16bit register address
+     * @return The float value which is composed of the addressed 16bit register and the one following it
+     */
     float read_float_from_register(int address);
+
+    /**
+     * Create the default constructor
+     */
+     ModbusDevice() = default;
 
     /**
      * Defined destructor to free memory when program terminates
@@ -83,6 +109,16 @@ private:
      * Pointer to modbus structure
      */
     modbus_t *mb_;
+
+    /**
+     * Determines if modbus debug statements are printed
+     */
+    bool debug_statements = false;
+
+    /**
+     * Sets the debug level based on the debug_statment boolean value
+     */
+    void set_debug();
 };
 
 

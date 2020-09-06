@@ -1,9 +1,10 @@
 #include "modbus_device.h"
-#include <bitset>
 #include <cstring>
 
 int ModbusDevice::init(const std::string &device_port, const std::string &device_name, int slave_number, int baud_rate, char parity, int data_bits, int stop_bits)
 {
+    std::cout << "Initialize " << device_name << " modbus protocol." << std::endl;
+
     // Set device name
     device_name_ = device_name;
 
@@ -23,25 +24,17 @@ int ModbusDevice::init(const std::string &device_port, const std::string &device
         return -1;
     }
 
+    // Determine if modbus debug statements are going ot be printed
+    set_debug();
 
     // This read register is just to wake up the Aqua Troll, the results can be ignored
     uint16_t tab_reg[1];
     modbus_read_registers(mb_, 1, 1, tab_reg);
 
-    modbus_set_debug(mb_, TRUE);
+    // Set the master timeout time
+    modbus_set_response_timeout(mb_, 60, 0);
 
-    uint32_t old_response_to_sec;
-    uint32_t old_response_to_usec;
-
-    // This code is for version 3.0.6
-    modbus_get_response_timeout(mb_, &old_response_to_sec, &old_response_to_usec);
-    std::cout << "Old Response. Seconds: " << old_response_to_sec << " msec : " << old_response_to_usec << std::endl;
-
-    /* Define a new and too short timeout! */
-    modbus_set_response_timeout(mb_, 120, 0);
-
-    modbus_get_response_timeout(mb_, &old_response_to_sec, &old_response_to_usec);
-    std::cout << "Old Response. Seconds: " << old_response_to_sec << " msec : " << old_response_to_usec << std::endl;
+    std::cout << "Done initializing " << device_name << "." << std::endl;
 
     return 0;
 }
@@ -66,14 +59,16 @@ float ModbusDevice::read_float_from_register(int address)
     uint32_t i;
     std::array<uint16_t , 2> tab_reg{0};
 
+    std::cout << "Reading registers for " << device_name_ << "." << std::endl;
     int result = read_from_register(address, 2, tab_reg);
+    std::cout << "Done reading registers for " << device_name_ << "." << std::endl;
 
     if (result == -1 )
     {
         return -1;
     }
 
-    i = (((uint32_t)tab_reg[0]) << 16) + tab_reg[1];
+    i = ((static_cast<uint32_t>(tab_reg[0])) << 16) + tab_reg[1];
     memcpy(&f, &i, sizeof(float));
 
     std::cout << f << std::endl;
@@ -84,5 +79,20 @@ ModbusDevice::~ModbusDevice() {
     if (mb_ != nullptr) {
         modbus_close(mb_);
         modbus_free(mb_);
+    }
+}
+
+void ModbusDevice::set_debug()
+{
+    if (mb_ == nullptr) {
+        std::cout << "Please initialize Modbus Device before setting debug level" << std::endl;
+    }
+
+    // This can be uncommented if debug statements are desired for modbus,
+    if (debug_statements)
+    {
+        modbus_set_debug(mb_, TRUE);
+    } else {
+        modbus_set_debug(mb_, FALSE);
     }
 }
