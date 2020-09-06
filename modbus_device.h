@@ -5,6 +5,7 @@
 #include <modbus/modbus.h>
 #include <string>
 #include <iostream>
+#include <array>
 
 class ModbusDevice {
     /**
@@ -45,7 +46,29 @@ public:
      */
     int write_to_register(int location, int value);
 
-    int read_from_register(int address, int number_of_registers);
+    template <size_t N>
+    int read_from_register(int address, int number_of_registers, std::array<uint16_t, N> &tab_reg)
+    {
+        // Read the registers from the device
+        int rc = modbus_read_registers(mb_, address, number_of_registers, tab_reg.data());
+
+        // Determine the error code of the read command
+        if (rc == -1)
+        {
+            fprintf(stderr, "Modbus read register failed %s: %s\n", device_name_.c_str(),  modbus_strerror(errno));
+            return -1;
+        }
+
+        // Display the results
+        for (int i=0; i < rc; i++) {
+            printf("reg[%d]=%d (0x%X)\n", i, tab_reg[i], tab_reg[i]);
+        }
+
+        return 0;
+
+    }
+
+    float read_float_from_register(int address);
 
     /**
      * Defined destructor to free memory when program terminates

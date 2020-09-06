@@ -1,5 +1,6 @@
 #include "modbus_device.h"
 #include <bitset>
+#include <cstring>
 
 int ModbusDevice::init(const std::string &device_port, const std::string &device_name, int slave_number, int baud_rate, char parity, int data_bits, int stop_bits)
 {
@@ -58,33 +59,26 @@ int ModbusDevice::write_to_register(int location, int value)
     return 0;
 }
 
-int ModbusDevice::read_from_register(int address, int number_of_registers)
+
+float ModbusDevice::read_float_from_register(int address)
 {
-    uint16_t tab_reg[2];
-    for (int i=0; i < 2; i++) {
-        tab_reg[i] = 0;
-    }
+    float f;
+    uint32_t i;
+    std::array<uint16_t , 2> tab_reg{0};
 
-    int rc = modbus_read_registers(mb_, address, number_of_registers, tab_reg);
+    int result = read_from_register(address, 2, tab_reg);
 
-    if (rc == -1)
+    if (result == -1 )
     {
-        fprintf(stderr, "Modbus read register failed %s: %s\n", device_name_.c_str(),  modbus_strerror(errno));
         return -1;
     }
 
-    for (int i=0; i < rc; i++) {
-        printf("reg[%d]=%d (0x%X)\n", i, tab_reg[i], tab_reg[i]);
-    }
+    i = (((uint32_t)tab_reg[0]) << 16) + tab_reg[1];
+    memcpy(&f, &i, sizeof(float));
 
-
-    std::cout << "rc " << rc << std::endl;
-    std::cout << "first: " << tab_reg[0] << std::endl;
-    std::cout << "second: " << tab_reg[1] << std::endl;
-
-    return 0;
+    std::cout << f << std::endl;
+    return f;
 }
-
 
 ModbusDevice::~ModbusDevice() {
     if (mb_ != nullptr) {
