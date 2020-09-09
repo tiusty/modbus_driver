@@ -108,7 +108,7 @@ private:
     /**
      * Pointer to modbus structure
      */
-    modbus_t *mb_;
+    modbus_t *mb_ = nullptr;
 
     /**
      * Determines if modbus debug statements are printed
@@ -118,7 +118,7 @@ private:
     /**
      * Sets the debug level based on the debug_statment boolean value
      */
-    void set_debug();
+    void set_debug_level();
 };
 
 

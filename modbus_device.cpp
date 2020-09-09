@@ -25,7 +25,7 @@ int ModbusDevice::init(const std::string &device_port, const std::string &device
     }
 
     // Determine if modbus debug statements are going ot be printed
-    set_debug();
+    set_debug_level();
 
     // This read register is just to wake up the Aqua Troll, the results can be ignored
     uint16_t tab_reg[1];
@@ -82,7 +82,7 @@ ModbusDevice::~ModbusDevice() {
     }
 }
 
-void ModbusDevice::set_debug()
+void ModbusDevice::set_debug_level()
 {
     if (mb_ == nullptr) {
         std::cout << "Please initialize Modbus Device before setting debug level" << std::endl;
