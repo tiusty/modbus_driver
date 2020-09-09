@@ -17,6 +17,8 @@ int main() {
         std::cout << "Error reading float from register" << std::endl;
     }
 
+    aqua_troll_500.read_ushort_from_register(aqua_troll::calculate_address(aqua_troll::parameter_name::temperature, aqua_troll::parameter_points::data_quality));
+
 
     return 0;
 }

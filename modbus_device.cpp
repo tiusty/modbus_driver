@@ -75,6 +75,24 @@ float ModbusDevice::read_float_from_register(int address)
     return f;
 }
 
+uint32_t ModbusDevice::read_ushort_from_register(int address)
+{
+    std::array<uint16_t, 1> tab_reg{0};
+
+    std::cout << "Reading registers for " << device_name_ << "." << std::endl;
+    int result = read_from_register(address, 1, tab_reg);
+    std::cout << "Done reading registers for " << device_name_ << "." << std::endl;
+
+    if (result == -1 )
+    {
+        return -1;
+    }
+
+    std::cout << tab_reg[0] << std::endl;
+    return tab_reg[0];
+
+}
+
 
 
 ModbusDevice::~ModbusDevice() {

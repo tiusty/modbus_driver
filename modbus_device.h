@@ -92,6 +92,13 @@ public:
     float read_float_from_register(int address);
 
     /**
+     * This function is used to read a ushort (usigned 16 bit) register
+     * @param address The address to read from
+     * @return The ushort value
+     */
+    uint32_t read_ushort_from_register(int address);
+
+    /**
      * Create the default constructor
      */
      ModbusDevice() = default;
