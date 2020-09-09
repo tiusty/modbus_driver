@@ -12,7 +12,7 @@ target_link_libraries(${PROJECT_NAME}
 
 add_library(${ModbusDeviceLib}
         modbus_device.cpp
-        )
+        aqua_troll.h)
 
 target_link_libraries(${ModbusDeviceLib}
         modbus

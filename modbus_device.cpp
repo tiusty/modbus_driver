@@ -75,6 +75,8 @@ float ModbusDevice::read_float_from_register(int address)
     return f;
 }
 
+
+
 ModbusDevice::~ModbusDevice() {
     if (mb_ != nullptr) {
         modbus_close(mb_);
