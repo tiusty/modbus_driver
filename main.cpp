@@ -18,6 +18,7 @@ int main() {
     }
 
     aqua_troll_500.read_ushort_from_register(aqua_troll::calculate_address(aqua_troll::parameter_name::temperature, aqua_troll::parameter_points::data_quality));
+    aqua_troll_500.read_ushort_from_register(aqua_troll::calculate_address(aqua_troll::parameter_name::temperature, aqua_troll::parameter_points::units_id));
 
 
     return 0;
