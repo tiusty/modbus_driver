@@ -1,8 +1,8 @@
 #include "modbus_device.h"
 #include <cstring>
 
-int ModbusDevice::init(const std::string &device_port, const std::string &device_name, int slave_number, int baud_rate, char parity, int data_bits, int stop_bits)
-{
+int ModbusDevice::init(const std::string &device_port, const std::string &device_name, int slave_number, int baud_rate,
+                       char parity, int data_bits, int stop_bits) {
     std::cout << "Initialize " << device_name << " modbus protocol." << std::endl;
 
     // Set device name
@@ -20,7 +20,7 @@ int ModbusDevice::init(const std::string &device_port, const std::string &device
 
     // Establish a Modbus Connection
     if (modbus_connect(mb_) == -1) {
-        fprintf(stderr, "Modbus connection failed for device %s: %s\n", device_name_.c_str(),  modbus_strerror(errno));
+        fprintf(stderr, "Modbus connection failed for device %s: %s\n", device_name_.c_str(), modbus_strerror(errno));
         return -1;
     }
 
@@ -40,12 +40,10 @@ int ModbusDevice::init(const std::string &device_port, const std::string &device
 }
 
 
-int ModbusDevice::write_to_register(int location, int value)
-{
+int ModbusDevice::write_to_register(int location, int value) {
     // Attempt to write the value at the register location
-    if (modbus_write_register(mb_, location, value) == -1)
-    {
-        fprintf(stderr, "Modbus Write Register fail for deivce %s: %s\n", device_name_.c_str(),  modbus_strerror(errno));
+    if (modbus_write_register(mb_, location, value) == -1) {
+        fprintf(stderr, "Modbus Write Register fail for deivce %s: %s\n", device_name_.c_str(), modbus_strerror(errno));
         return -1;
     }
 
@@ -53,14 +51,12 @@ int ModbusDevice::write_to_register(int location, int value)
 }
 
 
-float ModbusDevice::read_float_from_register(int address)
-{
+float ModbusDevice::read_float_from_register(int address) {
     float f;
     uint32_t i;
-    std::array<uint16_t , 2> tab_reg{0};
+    std::array<uint16_t, 2> tab_reg{0};
 
-    if (read_from_register(address, 2, tab_reg) == -1)
-    {
+    if (read_from_register(address, 2, tab_reg) == -1) {
         return -1;
     }
 
@@ -71,12 +67,10 @@ float ModbusDevice::read_float_from_register(int address)
     return f;
 }
 
-uint32_t ModbusDevice::read_ushort_from_register(int address)
-{
+uint32_t ModbusDevice::read_ushort_from_register(int address) {
     std::array<uint16_t, 1> tab_reg{0};
 
-    if (read_from_register(address, 1, tab_reg) == -1)
-    {
+    if (read_from_register(address, 1, tab_reg) == -1) {
         return -1;
     }
 
@@ -91,15 +85,13 @@ ModbusDevice::~ModbusDevice() {
     }
 }
 
-void ModbusDevice::set_debug_level()
-{
+void ModbusDevice::set_debug_level() {
     if (mb_ == nullptr) {
         std::cout << "Please initialize Modbus Device before setting debug level" << std::endl;
     }
 
     // This can be uncommented if debug statements are desired for modbus,
-    if (debug_statements)
-    {
+    if (debug_statements) {
         modbus_set_debug(mb_, TRUE);
     } else {
         modbus_set_debug(mb_, FALSE);

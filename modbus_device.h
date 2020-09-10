@@ -1,4 +1,3 @@
-
 #ifndef MODBUS_DRIVER_MODBUS_DEVICE_H
 #define MODBUS_DRIVER_MODBUS_DEVICE_H
 
@@ -36,7 +35,8 @@ public:
      * @param stop_bits The number of stop bits
      * @return 0 if success, -1 otherwise
      */
-    int init(const std::string &device_port, const std::string &device_name, int slave_number, int baud_rate = 9600, char parity = 'N', int data_bits = 8, int stop_bits = 1);
+    int init(const std::string &device_port, const std::string &device_name, int slave_number, int baud_rate = 9600,
+             char parity = 'N', int data_bits = 8, int stop_bits = 1);
 
     /**
      * Writes a value to the desired location
@@ -55,12 +55,10 @@ public:
      * @param tab_reg The array that will store the results from the read registers
      * @return 0 if success, -1 if fail
      */
-    template <size_t N>
-    int read_from_register(int address, int number_of_registers, std::array<uint16_t, N> &tab_reg)
-    {
+    template<size_t N>
+    int read_from_register(int address, int number_of_registers, std::array<uint16_t, N> &tab_reg) {
         // Simple check to make sure the array can hold the amount of desired registers
-        if (number_of_registers > tab_reg.max_size())
-        {
+        if (number_of_registers > tab_reg.max_size()) {
             std::cout << "Number of registers should be less than or equal to the length of the array" << std::endl;
             return -1;
         }
@@ -69,9 +67,8 @@ public:
         int rc = modbus_read_registers(mb_, address, number_of_registers, tab_reg.data());
 
         // Determine the error code of the read command
-        if (rc == -1)
-        {
-            fprintf(stderr, "Modbus read register failed %s: %s\n", device_name_.c_str(),  modbus_strerror(errno));
+        if (rc == -1) {
+            fprintf(stderr, "Modbus read register failed %s: %s\n", device_name_.c_str(), modbus_strerror(errno));
             return -1;
         }
 
@@ -101,12 +98,13 @@ public:
     /**
      * Create the default constructor
      */
-     ModbusDevice() = default;
+    ModbusDevice() = default;
 
     /**
      * Defined destructor to free memory when program terminates
      */
     ~ModbusDevice();
+
 private:
     /**
      * Stores the name of the device

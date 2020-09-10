@@ -56,8 +56,7 @@ namespace aqua_troll {
      * @param parameter_id The desired parameter id
      * @return The starting register address
      */
-    constexpr int starting_register(int parameter_id)
-    {
+    constexpr int starting_register(int parameter_id) {
         return (parameter_id - 1) * 7 + 5451;
     }
 
@@ -76,8 +75,7 @@ namespace aqua_troll {
      * This gets the address for the measured temperature value
      * aqua_troll::calculate_address(aqua_troll::parameter_name::temperature, aqua_troll::parameter_points::value)
      */
-    constexpr int calculate_address(int parameter_id, int parameter_point)
-    {
+    constexpr int calculate_address(int parameter_id, int parameter_point) {
         // Modbus requires subtracting one because of the way it calculates the holding register
         return starting_register(parameter_id) + parameter_point - 1;
     }
