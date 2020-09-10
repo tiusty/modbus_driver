@@ -28,6 +28,11 @@ namespace aqua_troll {
      * The different parameters that could be available depending on the installed sensors
      *
      * Units depend on what they are set to and can be read from the parameter point units_id
+     * These values are from page 55 of the aqua troll manual
+     * https://in-situ.com/pub/media/support/documents/at500-manual.pdf
+     *
+     * Not all the parameters are added since the list would get long. As sensors are added,
+     *  the corresponding parameter_id can be added below
      */
     namespace parameter_name {
         constexpr int temperature = 1;
@@ -35,6 +40,10 @@ namespace aqua_troll {
         constexpr int depth = 3;
         constexpr int level_depth_to_water = 4;
         constexpr int level_surface_elevation = 5;
+        constexpr int actual_conductivity = 9;
+        constexpr int specific_conductivity = 10;
+        constexpr int resistivity = 11;
+        constexpr int salinity = 12;
     }
 
     /**

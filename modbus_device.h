@@ -75,10 +75,10 @@ public:
             return -1;
         }
 
-        // Display the results
-        for (int i=0; i < rc; i++) {
-            printf("reg[%d]=%d (0x%X)\n", i, tab_reg[i], tab_reg[i]);
-        }
+        // Useful print statement to print out hex values of the registers
+//        for (int i=0; i < rc; i++) {
+//            printf("reg[%d]=%d (0x%X)\n", i, tab_reg[i], tab_reg[i]);
+//        }
 
         return 0;
 

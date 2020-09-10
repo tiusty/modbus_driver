@@ -59,19 +59,15 @@ float ModbusDevice::read_float_from_register(int address)
     uint32_t i;
     std::array<uint16_t , 2> tab_reg{0};
 
-    std::cout << "Reading registers for " << device_name_ << "." << std::endl;
-    int result = read_from_register(address, 2, tab_reg);
-    std::cout << "Done reading registers for " << device_name_ << "." << std::endl;
-
-    if (result == -1 )
+    if (read_from_register(address, 2, tab_reg) == -1)
     {
         return -1;
     }
 
+    // Convert the 2 uint16 values to a float
     i = ((static_cast<uint32_t>(tab_reg[0])) << 16) + tab_reg[1];
     memcpy(&f, &i, sizeof(float));
 
-    std::cout << f << std::endl;
     return f;
 }
 
@@ -79,23 +75,16 @@ uint32_t ModbusDevice::read_ushort_from_register(int address)
 {
     std::array<uint16_t, 1> tab_reg{0};
 
-    std::cout << "Reading registers for " << device_name_ << "." << std::endl;
-    int result = read_from_register(address, 1, tab_reg);
-    std::cout << "Done reading registers for " << device_name_ << "." << std::endl;
-
-    if (result == -1 )
+    if (read_from_register(address, 1, tab_reg) == -1)
     {
         return -1;
     }
 
-    std::cout << tab_reg[0] << std::endl;
     return tab_reg[0];
-
 }
 
-
-
 ModbusDevice::~ModbusDevice() {
+    // Free memory if it is activated
     if (mb_ != nullptr) {
         modbus_close(mb_);
         modbus_free(mb_);
