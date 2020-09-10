@@ -1,10 +1,12 @@
-//
-// Created by Alex on 9/9/2020.
-//
-
 #ifndef MODBUS_DRIVER_AQUA_TROLL_H
 #define MODBUS_DRIVER_AQUA_TROLL_H
 
+/**
+ * This namespace contains the register information for the aqua troll.
+ *
+ * This is meant to be used with the ModbusDevice class. This namespace provides an easy way
+ *  to access register location for each parameter/sensor
+ */
 namespace aqua_troll {
     /**
      * The parameters points are the 7 registers associated with each parameter.
@@ -47,10 +49,10 @@ namespace aqua_troll {
     }
 
     /**
-     * Given a paramtere_id, calcaulte the starting reigster for that parameter. Each parameter
+     * Given a parameter_id, calculate the starting register for that parameter. Each parameter
      *  has 7 registers associated with it starting at the starting_register.
      *
-     *  Usually calculate_address should be used, not this one
+     *  Usually the calculate_address function should be used, not this function
      * @param parameter_id The desired parameter id
      * @return The starting register address
      */
