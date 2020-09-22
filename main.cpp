@@ -65,9 +65,6 @@ int main() {
                                           aqua_troll::parameter_points::units_id));
     std::cout << "Resistivity units id is: " << resistivity_units_id << std::endl;
 
-
-
-
     return 0;
 }
 
