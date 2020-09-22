@@ -17,7 +17,6 @@ int main() {
     float temp_value = aqua_troll_500.read_float_from_register(
             aqua_troll::calculate_address(aqua_troll::parameter_name::temperature,
                                           aqua_troll::parameter_points::value));
-    std::cout << "Temperature value is: " << temp_value << " celcius" << std::endl;
 
     uint16_t temp_data_quality = aqua_troll_500.read_ushort_from_register(
             aqua_troll::calculate_address(aqua_troll::parameter_name::temperature,
@@ -27,7 +26,28 @@ int main() {
     uint16_t temp_units = aqua_troll_500.read_ushort_from_register(
             aqua_troll::calculate_address(aqua_troll::parameter_name::temperature,
                                           aqua_troll::parameter_points::units_id));
-    std::cout << "Temperature units id is " << temp_units << std::endl;
+    std::string temp_units_str = temp_units == 1 ? "Celsius" : "Fahrenheit";
+    std::cout << "Temperature value is: " << temp_value << " " << temp_units_str << std::endl;
+
+    // Now change the units of temperature
+    std::cout << "Changing Units of Temperature" << std::endl;
+    uint16_t new_temp_units = 1;
+    if (temp_units == 1)
+    {
+        new_temp_units = 2;
+    }
+    aqua_troll_500.write_to_register(aqua_troll::calculate_address(aqua_troll::parameter_name::temperature, aqua_troll::parameter_points::units_id), new_temp_units);
+
+    // read the values of temperature again
+    temp_value = aqua_troll_500.read_float_from_register(
+            aqua_troll::calculate_address(aqua_troll::parameter_name::temperature,
+                                          aqua_troll::parameter_points::value));
+
+    temp_units = aqua_troll_500.read_ushort_from_register(
+            aqua_troll::calculate_address(aqua_troll::parameter_name::temperature,
+                                          aqua_troll::parameter_points::units_id));
+    temp_units_str = temp_units == 1 ? "Celsius" : "Fahrenheit";
+    std::cout << "Temperature value is: " << temp_value << " " << temp_units_str << std::endl;
 
     // Read parameters for resistivity
     float resistivity_value = aqua_troll_500.read_float_from_register(
@@ -44,6 +64,9 @@ int main() {
             aqua_troll::calculate_address(aqua_troll::parameter_name::resistivity,
                                           aqua_troll::parameter_points::units_id));
     std::cout << "Resistivity units id is: " << resistivity_units_id << std::endl;
+
+
+
 
     return 0;
 }
