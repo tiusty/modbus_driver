@@ -83,7 +83,7 @@ int main() {
     /* Logic to control communication with the Arduino */
 
     // Set value to 1 to turn on the LED
-    arduino.write_to_register_function_06(0,1);
+    arduino.write_to_register(0, 1);
 
     return 0;
 }

@@ -40,12 +40,21 @@ public:
 
     /**
      * Writes a value to the desired location
+     *  This performs a Modbus function code 16 (Write to registers)
      * @param location The location to write to
      * @param value The value to write
      * @return 0 if success, -1 otherwise
      */
     int write_to_registers(int location, uint16_t value);
-   int  write_to_register_function_06(int location, uint16_t value);
+
+    /**
+     * Writes a value to the desired location
+     *  This performs a Modbus function code 6 (WRite to register)
+     * @param location The location to write to
+     * @param value The value to write
+     * @return 0 if success, -1 otherwise
+     */
+    int  write_to_register(int location, uint16_t value);
 
     /**
      * Reads a sequential list of registers starting at the desired address. The number of registers can be
