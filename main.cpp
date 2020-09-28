@@ -42,13 +42,14 @@ int main() {
 
     // Now change the units of temperature
     std::cout << "Changing Units of Temperature" << std::endl;
-    uint16_t new_temp_units = 1;
+    std::array<uint16_t, 1> new_temp_units = {1};
     if (temp_units == 1)
     {
-        new_temp_units = 2;
+        new_temp_units.at(0) = 2;
     }
     aqua_troll_500.write_to_registers(aqua_troll::calculate_address(aqua_troll::parameter_name::temperature,
                                                                     aqua_troll::parameter_points::units_id),
+                                      1,
                                       new_temp_units);
 
     // read the values of temperature again

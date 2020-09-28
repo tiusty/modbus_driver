@@ -45,7 +45,24 @@ public:
      * @param value The value to write
      * @return 0 if success, -1 otherwise
      */
-    int write_to_registers(int location, uint16_t value);
+    template<size_t N>
+    int write_to_registers(int location, int number_of_registers, std::array<uint16_t, N> tab_reg)
+    {
+        // Simple check to make sure the user does not want to write values than the array size
+        if (number_of_registers > tab_reg.size()) {
+            std::cout << "Number of registers should be less than or equal to the length of the array" << std::endl;
+            return -1;
+        }
+
+        // Attempt to write the value at the register location
+        if (modbus_write_registers(mb_, location, number_of_registers, tab_reg.data()) == -1) {
+            fprintf(stderr, "Modbus Write Register fail for device %s: %s\n", device_name_.c_str(), modbus_strerror(errno));
+            return -1;
+        }
+
+        return 0;
+
+    }
 
     /**
      * Writes a value to the desired location
@@ -68,7 +85,7 @@ public:
     template<size_t N>
     int read_from_register(int address, int number_of_registers, std::array<uint16_t, N> &tab_reg) {
         // Simple check to make sure the array can hold the amount of desired registers
-        if (number_of_registers > tab_reg.max_size()) {
+        if (number_of_registers > tab_reg.size()) {
             std::cout << "Number of registers should be less than or equal to the length of the array" << std::endl;
             return -1;
         }

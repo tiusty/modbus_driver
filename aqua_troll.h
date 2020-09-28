@@ -12,11 +12,14 @@ namespace aqua_troll {
      * The parameters points are the 7 registers associated with each parameter.
      * These are taken from page 37 of the aqua troll 500 manual
      *
-     * value (float) -> The measured value from the sensor
-     * data_quality (ushort) -> 0 means no error, otherwise check the system specs for the error
-     * units_id (ushort) -> Unit id for the measured value. Table on page 57 of aqua troll manual
-     * parameter_id (ushort) -> The ID of the parameter for this location
-     * offline_sentinel_value (float) -> The value that's return on error or if the parameter is not available
+     * NOte: When writing to Aqua Troll values, must use function code 16 (write to registers)
+     *  I.e don't use the write_to_register function, use the write_to_registers function with array size 1
+     *
+     * value (R) (float) -> The measured value from the sensor
+     * data_quality (R) (ushort) -> 0 means no error, otherwise check the system specs for the error
+     * units_id (R/W)  (ushort) -> Unit id for the measured value. Table on page 57 of aqua troll manual
+     * parameter_id (R) (ushort) -> The ID of the parameter for this location
+     * offline_sentinel_value (R/W) (float) -> The value that's return on error or if the parameter is not available
      */
     namespace parameter_points {
         constexpr int value = 0;
