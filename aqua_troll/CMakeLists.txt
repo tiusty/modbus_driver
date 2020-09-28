@@ -4,10 +4,12 @@ project(aqua_troll
         VERSION 1.0
         LANGUAGES CXX)
 
+# Create the Aqua Troll Library
 add_library(${PROJECT_NAME}
         aqua_troll.cpp aqua_troll_private.h aqua_troll.h
         )
 
+# Link the necessary libraries
 target_link_libraries(${PROJECT_NAME}
         modbus_wrapper
         )
