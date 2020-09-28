@@ -3,12 +3,12 @@
 
 int ModbusDevice::init(const std::string &device_port, const std::string &device_name, int slave_number, int baud_rate,
                        char parity, int data_bits, int stop_bits) {
-    std::cout << "Initialize " << device_name << " modbus protocol." << std::endl;
+    std::cout << "Initialize " << device_name << " modbus_wrapper protocol." << std::endl;
 
     // Set device name
     device_name_ = device_name;
 
-    // Create the new modbus device
+    // Create the new modbus_wrapper device
     mb_ = modbus_new_rtu(device_port.c_str(), baud_rate, parity, data_bits, stop_bits);
     if (mb_ == NULL) {
         fprintf(stderr, "Failed to create new rtu device for device %s: \n", device_name_.c_str());
@@ -24,7 +24,7 @@ int ModbusDevice::init(const std::string &device_port, const std::string &device
         return -1;
     }
 
-    // Determine if modbus debug statements are going ot be printed
+    // Determine if modbus_wrapper debug statements are going ot be printed
     set_debug_level();
 
     // This read register is just to wake up the Aqua Troll, the results can be ignored
@@ -89,7 +89,7 @@ void ModbusDevice::set_debug_level() {
         std::cout << "Please initialize Modbus Device before setting debug level" << std::endl;
     }
 
-    // This can be uncommented if debug statements are desired for modbus,
+    // This can be uncommented if debug statements are desired for modbus_wrapper,
     if (debug_statements) {
         modbus_set_debug(mb_, TRUE);
     } else {

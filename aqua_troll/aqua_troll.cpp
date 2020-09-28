@@ -2,7 +2,7 @@
 // Created by Alex on 9/27/2020.
 //
 #include "modbus_device.h"
-#include <aqua_troll/aqua_troll_private.h>
+#include <aqua_troll_private.h>
 
 int run_aqua_troll_500()
 {

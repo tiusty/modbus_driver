@@ -25,10 +25,10 @@ class ModbusDevice {
      */
 public:
     /**
-     * Initializes the modbus device on the modbus rtu network
+     * Initializes the modbus_wrapper device on the modbus_wrapper rtu network
      * @param device_port The port the device is connected to
      * @param device_name The device name. Used for printing logging messages
-     * @param slave_number The slave ID of the modbus device
+     * @param slave_number The slave ID of the modbus_wrapper device
      * @param baud_rate The baud rate of the device
      * @param parity Determines the type of parity used
      * @param data_bits The number of data bits
@@ -138,12 +138,12 @@ private:
      */
     std::string device_name_;
     /**
-     * Pointer to modbus structure
+     * Pointer to modbus_wrapper structure
      */
     modbus_t *mb_ = nullptr;
 
     /**
-     * Determines if modbus debug statements are printed
+     * Determines if modbus_wrapper debug statements are printed
      */
     bool debug_statements = false;
 

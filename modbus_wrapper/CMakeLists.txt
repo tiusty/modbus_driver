@@ -1,19 +1,20 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(aqua_troll
+project(modbus_wrapper
         VERSION 1.0
         LANGUAGES CXX)
 
+
 add_library(${PROJECT_NAME}
-        aqua_troll.cpp aqua_troll_private.h aqua_troll.h
+        modbus_device.cpp modbus_device.h
         )
 
 target_link_libraries(${PROJECT_NAME}
-        modbus_wrapper
+        modbus
         )
 
 target_include_directories(${PROJECT_NAME}
-        PRIVATE
+        PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}
         )
 
