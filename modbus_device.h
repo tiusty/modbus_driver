@@ -20,8 +20,8 @@ class ModbusDevice {
      *      aqua_troll_500.init("/dev/ttyS6, "Aqua Troll 500", 2);
      *
      *      // Now the devices can be written to/read from etc
-     *      arduino.write_to_register(0,0);
-     *      aqua_troll_500.write_to_register(2,5);
+     *      arduino.write_to_registers(0,0);
+     *      aqua_troll_500.write_to_registers(2,5);
      */
 public:
     /**
@@ -44,7 +44,7 @@ public:
      * @param value The value to write
      * @return 0 if success, -1 otherwise
      */
-    int write_to_register(int location, uint16_t value);
+    int write_to_registers(int location, uint16_t value);
    int  write_to_register_function_06(int location, uint16_t value);
 
     /**

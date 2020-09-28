@@ -39,7 +39,7 @@ int ModbusDevice::init(const std::string &device_port, const std::string &device
     return 0;
 }
 
-int ModbusDevice::write_to_register(int location, uint16_t value) {
+int ModbusDevice::write_to_registers(int location, uint16_t value) {
     // Attempt to write the value at the register location
     if (modbus_write_registers(mb_, location, 1, &value) == -1) {
         fprintf(stderr, "Modbus Write Register fail for device %s: %s\n", device_name_.c_str(), modbus_strerror(errno));

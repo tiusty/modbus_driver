@@ -47,7 +47,9 @@ int main() {
     {
         new_temp_units = 2;
     }
-    aqua_troll_500.write_to_register(aqua_troll::calculate_address(aqua_troll::parameter_name::temperature, aqua_troll::parameter_points::units_id), new_temp_units);
+    aqua_troll_500.write_to_registers(aqua_troll::calculate_address(aqua_troll::parameter_name::temperature,
+                                                                    aqua_troll::parameter_points::units_id),
+                                      new_temp_units);
 
     // read the values of temperature again
     temp_value = aqua_troll_500.read_float_from_register(
