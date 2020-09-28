@@ -1,5 +1,5 @@
-#ifndef MODBUS_DRIVER_AQUA_TROLL_H
-#define MODBUS_DRIVER_AQUA_TROLL_H
+#ifndef MODBUS_DRIVER_AQUA_TROLL_PRIVATE_H
+#define MODBUS_DRIVER_AQUA_TROLL_PRIVATE_H
 
 /**
  * This namespace contains the register information for the aqua troll.
@@ -84,4 +84,4 @@ namespace aqua_troll {
     }
 }
 
-#endif //MODBUS_DRIVER_AQUA_TROLL_H
+#endif //MODBUS_DRIVER_AQUA_TROLL_PRIVATE_H
