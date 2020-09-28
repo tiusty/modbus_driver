@@ -1,11 +1,11 @@
 #include <iostream>
-#include "modbus_device.h"
+#include "modbus_wrapper.h"
 #include "aqua_troll/aqua_troll.h"
 
 int main() {
     run_aqua_troll_500();
 
-    ModbusDevice arduino;
+    ModbusWrapper arduino;
 
     // Initial the Arduino
     if (arduino.init("/dev/ttyS6", "Arduino", 1, 9600, 'N', 8, 1) == -1) {

@@ -1,13 +1,13 @@
 //
 // Created by Alex on 9/27/2020.
 //
-#include "modbus_device.h"
+#include "modbus_wrapper.h"
 #include <aqua_troll_private.h>
 
 int run_aqua_troll_500()
 {
     // Declare the Modbus Device
-    ModbusDevice aqua_troll_500;
+    ModbusWrapper aqua_troll_500;
 
     /* Initialize the desired device */
 

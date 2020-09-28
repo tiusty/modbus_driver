@@ -6,7 +6,7 @@ project(modbus_wrapper
 
 
 add_library(${PROJECT_NAME}
-        modbus_device.cpp modbus_device.h
+        modbus_wrapper.cpp modbus_wrapper.h
         )
 
 target_link_libraries(${PROJECT_NAME}

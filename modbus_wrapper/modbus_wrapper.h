@@ -1,19 +1,19 @@
-#ifndef MODBUS_DRIVER_MODBUS_DEVICE_H
-#define MODBUS_DRIVER_MODBUS_DEVICE_H
+#ifndef MODBUS_DRIVER_MODBUS_WRAPPER_H
+#define MODBUS_DRIVER_MODBUS_WRAPPER_H
 
 #include <modbus/modbus.h>
 #include <string>
 #include <iostream>
 #include <array>
 
-class ModbusDevice {
+class ModbusWrapper {
     /**
      * Class stores information associated with one Modbus Device slave device. Each device should
      *  have a new instance of the class instantiated.
      *  Example:
      *      // Define various Modbus slave devices
-     *      ModbusDevice arduino;
-     *      ModbusDevice aqua_troll_500;
+     *      ModbusWrapper arduino;
+     *      ModbusWrapper aqua_troll_500;
      *
      *      // Initialize the devices by setting the appropriate configuration
      *      arduino.init("/dev/ttyS5", "Arduino", 1);
@@ -125,12 +125,12 @@ public:
     /**
      * Create the default constructor
      */
-    ModbusDevice() = default;
+    ModbusWrapper() = default;
 
     /**
      * Defined destructor to free memory when program terminates
      */
-    ~ModbusDevice();
+    ~ModbusWrapper();
 
 private:
     /**
@@ -154,4 +154,4 @@ private:
 };
 
 
-#endif //MODBUS_DRIVER_MODBUS_DEVICE_H
+#endif //MODBUS_DRIVER_MODBUS_WRAPPER_H

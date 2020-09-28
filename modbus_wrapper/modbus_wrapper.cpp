@@ -1,8 +1,8 @@
-#include "modbus_device.h"
+#include "modbus_wrapper.h"
 #include <cstring>
 
-int ModbusDevice::init(const std::string &device_port, const std::string &device_name, int slave_number, int baud_rate,
-                       char parity, int data_bits, int stop_bits) {
+int ModbusWrapper::init(const std::string &device_port, const std::string &device_name, int slave_number, int baud_rate,
+                        char parity, int data_bits, int stop_bits) {
     std::cout << "Initialize " << device_name << " modbus_wrapper protocol." << std::endl;
 
     // Set device name
@@ -39,7 +39,7 @@ int ModbusDevice::init(const std::string &device_port, const std::string &device
     return 0;
 }
 
-int ModbusDevice::write_to_register(int location, uint16_t value) {
+int ModbusWrapper::write_to_register(int location, uint16_t value) {
     // Attempt to write the value at the register location
     if (modbus_write_register(mb_, location, value) == -1) {
         fprintf(stderr, "Modbus Write Register fail for device %s: %s\n", device_name_.c_str(), modbus_strerror(errno));
@@ -50,7 +50,7 @@ int ModbusDevice::write_to_register(int location, uint16_t value) {
 }
 
 
-float ModbusDevice::read_float_from_register(int address) {
+float ModbusWrapper::read_float_from_register(int address) {
     float f;
     uint32_t i;
     std::array<uint16_t, 2> tab_reg{0};
@@ -66,7 +66,7 @@ float ModbusDevice::read_float_from_register(int address) {
     return f;
 }
 
-uint32_t ModbusDevice::read_ushort_from_register(int address) {
+uint32_t ModbusWrapper::read_ushort_from_register(int address) {
     std::array<uint16_t, 1> tab_reg{0};
 
     if (read_from_register(address, 1, tab_reg) == -1) {
@@ -76,7 +76,7 @@ uint32_t ModbusDevice::read_ushort_from_register(int address) {
     return tab_reg[0];
 }
 
-ModbusDevice::~ModbusDevice() {
+ModbusWrapper::~ModbusWrapper() {
     // Free memory if it is activated
     if (mb_ != nullptr) {
         modbus_close(mb_);
@@ -84,7 +84,7 @@ ModbusDevice::~ModbusDevice() {
     }
 }
 
-void ModbusDevice::set_debug_level() {
+void ModbusWrapper::set_debug_level() {
     if (mb_ == nullptr) {
         std::cout << "Please initialize Modbus Device before setting debug level" << std::endl;
     }

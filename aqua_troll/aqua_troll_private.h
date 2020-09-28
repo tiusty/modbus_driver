@@ -4,7 +4,7 @@
 /**
  * This namespace contains the register information for the aqua troll.
  *
- * This is meant to be used with the ModbusDevice class. This namespace provides an easy way
+ * This is meant to be used with the ModbusWrapper class. This namespace provides an easy way
  *  to access register location for each parameter/sensor
  */
 namespace aqua_troll {
