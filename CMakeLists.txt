@@ -11,6 +11,7 @@ add_subdirectory(modbus_wrapper)
 
 # Added desired devices
 add_subdirectory(aqua_troll)
+add_subdirectory(arduino)
 
 # Create the main executable
 add_executable(${PROJECT_NAME} main.cpp)
@@ -19,4 +20,5 @@ add_executable(${PROJECT_NAME} main.cpp)
 target_link_libraries(${PROJECT_NAME}
         modbus_wrapper
         aqua_troll
+        arduino
         )
