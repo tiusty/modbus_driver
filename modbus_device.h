@@ -45,6 +45,7 @@ public:
      * @return 0 if success, -1 otherwise
      */
     int write_to_register(int location, uint16_t value);
+   int  write_to_register_function_06(int location, uint16_t value);
 
     /**
      * Reads a sequential list of registers starting at the desired address. The number of registers can be

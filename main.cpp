@@ -6,12 +6,23 @@
 int main() {
     // Declare the devices
     ModbusDevice aqua_troll_500;
+    ModbusDevice arduino;
 
-    // Initialize the desired devices
+    /* Initialize the desired devices */
+
+    // Initialize the aqua troll
     if (aqua_troll_500.init("/dev/ttyS5", "Aqua Troll 500", 1, 19200, 'E', 8, 1) == -1) {
         std::cout << "Failed to initialize device, exiting" << std::endl;
         return -1;
     }
+
+    // Initial the Arduino
+    if (arduino.init("/dev/ttyS6", "Arduino", 1, 9600, 'N', 8, 1) == -1) {
+        std::cout << "Failed to initialize device, exiting" << std::endl;
+        return -1;
+    }
+
+    /* Logic to handle communication with the Aqua Troll */
 
     // Read parameters for temperature
     float temp_value = aqua_troll_500.read_float_from_register(
@@ -64,6 +75,13 @@ int main() {
             aqua_troll::calculate_address(aqua_troll::parameter_name::resistivity,
                                           aqua_troll::parameter_points::units_id));
     std::cout << "Resistivity units id is: " << resistivity_units_id << std::endl;
+
+
+
+    /* Logic to control communication with the Arduino */
+
+    // Set value to 1 to turn on the LED
+    arduino.write_to_register_function_06(0,1);
 
     return 0;
 }
