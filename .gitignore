@@ -150,3 +150,5 @@
 /cmake-build-debug/arduino/Makefile
 /cmake-build-debug/arduino/CMakeFiles/arduino.dir/progress.make
 /cmake-build-debug/arduino/CMakeFiles/progress.marks
+/cmake-build-debug/CMakeFiles/CheckLibraryExists/CheckFunctionExists.cxx
+/cmake-build-debug/CMakeFiles/CMakeError.log

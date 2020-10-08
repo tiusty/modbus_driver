@@ -4,7 +4,7 @@
 #include "modbus_wrapper.h"
 #include <aqua_troll_private.h>
 
-int run_aqua_troll_500()
+int run_aqua_troll_500(const std::string& comm_port)
 {
     // Declare the Modbus Device
     ModbusWrapper aqua_troll_500;
@@ -12,7 +12,7 @@ int run_aqua_troll_500()
     /* Initialize the desired device */
 
     // Initialize the aqua troll
-    if (aqua_troll_500.init("/dev/ttyS5", "Aqua Troll 500", 1, 19200, 'E', 8, 1) == -1) {
+    if (aqua_troll_500.init(comm_port, "Aqua Troll 500", 1, 19200, 'E', 8, 1) == -1) {
         std::cout << "Failed to initialize device, exiting" << std::endl;
         return -1;
     }

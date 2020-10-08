@@ -5,12 +5,12 @@
 #include "arduino.h"
 #include "modbus_wrapper.h"
 
-int run_arduino()
+int run_arduino(const std::string& comm_port)
 {
     ModbusWrapper arduino;
 
     // Initial the Arduino
-    if (arduino.init("/dev/ttyS6", "Arduino", 1, 9600, 'N', 8, 1) == -1) {
+    if (arduino.init(comm_port, "Arduino", 1, 9600, 'N', 8, 1) == -1) {
         std::cout << "Failed to initialize device, exiting" << std::endl;
         return -1;
     }
