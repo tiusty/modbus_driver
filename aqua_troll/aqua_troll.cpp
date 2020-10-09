@@ -14,7 +14,7 @@
 std::mutex mtx;
 
 void timer_start(std::function<int(const std::string &)> func, unsigned int interval, const std::string &comm_port);
-int print_data_values(const std::string &comm_port);
+int change_temperature_units(const std::string &comm_port);
 int print_temperature_values(const std::string &comm_port);
 
 void run_aqua_troll_500(const std::string &comm_port) {
@@ -25,8 +25,8 @@ void run_aqua_troll_500(const std::string &comm_port) {
      *  @param comm_port: THe comm port for the aqua troll
      */
     // Start a timer function that runs on the specified frequency
-    timer_start(print_data_values, 4000, comm_port);
-    timer_start(print_temperature_values, 3000, comm_port);
+    timer_start(change_temperature_units, 10000, comm_port);
+    timer_start(print_temperature_values, 5000, comm_port);
 
     // Runs forever
     while (true)
@@ -69,25 +69,6 @@ int print_temperature_values(const std::string &comm_port) {
     // the aqua troll at the same time
     std::unique_lock<std::mutex> lck (mtx);
 
-    std::cout << "Thread 2" <<std::endl;
-    auto x = std::chrono::steady_clock::now() + std::chrono::milliseconds(1000);
-    std::this_thread::sleep_until(x);
-    std::cout << "End Thread 2" << std::endl;
-
-    return 0;
-}
-
-int print_data_values(const std::string &comm_port) {
-    /**
-     * An example Aqua Troll function that can be run
-     *
-     * @param comm_port: The comm port for the aqua troll
-     */
-     // The first step for every function is to acquire a mutex
-     // to prevent against race conditions of two threads trying to read/write to
-     // the aqua troll at the same time
-    std::unique_lock<std::mutex> lck (mtx);
-
     // Declare the Modbus Device
     ModbusWrapper aqua_troll_500;
 
@@ -117,8 +98,40 @@ int print_data_values(const std::string &comm_port) {
     std::string temp_units_str = temp_units == 1 ? "Celsius" : "Fahrenheit";
     std::cout << "Temperature value is: " << temp_value << " " << temp_units_str << std::endl;
 
+
+    return 0;
+}
+
+int change_temperature_units(const std::string &comm_port) {
+    /**
+     * An example Aqua Troll function that can be run
+     *
+     * @param comm_port: The comm port for the aqua troll
+     */
+     // The first step for every function is to acquire a mutex
+     // to prevent against race conditions of two threads trying to read/write to
+     // the aqua troll at the same time
+    std::unique_lock<std::mutex> lck (mtx);
+
+    // Declare the Modbus Device
+    ModbusWrapper aqua_troll_500;
+
+    /* Initialize the desired device */
+
+    // Initialize the aqua troll
+    if (aqua_troll_500.init(comm_port, "Aqua Troll 500", 1, 19200, 'E', 8, 1) == -1) {
+        std::cout << "Failed to initialize device, exiting" << std::endl;
+        return -1;
+    }
+
+    /* Logic to handle communication with the Aqua Troll */
+
+    // Read temperature units
+    uint16_t temp_units = aqua_troll_500.read_ushort_from_register(
+            aqua_troll::calculate_address(aqua_troll::parameter_name::temperature,
+                                          aqua_troll::parameter_points::units_id));
+
     // Now change the units of temperature
-    std::cout << "Changing Units of Temperature" << std::endl;
     std::array<uint16_t, 1> new_temp_units = {1};
     if (temp_units == 1) {
         new_temp_units.at(0) = 2;
@@ -128,16 +141,40 @@ int print_data_values(const std::string &comm_port) {
                                       1,
                                       new_temp_units);
 
-    // read the values of temperature again
-    temp_value = aqua_troll_500.read_float_from_register(
-            aqua_troll::calculate_address(aqua_troll::parameter_name::temperature,
-                                          aqua_troll::parameter_points::value));
-
     temp_units = aqua_troll_500.read_ushort_from_register(
             aqua_troll::calculate_address(aqua_troll::parameter_name::temperature,
                                           aqua_troll::parameter_points::units_id));
-    temp_units_str = temp_units == 1 ? "Celsius" : "Fahrenheit";
-    std::cout << "Temperature value is: " << temp_value << " " << temp_units_str << std::endl;
+    std::string temp_units_str = temp_units == 1 ? "Celsius" : "Fahrenheit";
+
+    // Print out the new units of temperature
+    std::cout << "Temperature units are now in " << temp_units_str << std::endl;
+
+    return 0;
+
+}
+
+int print_resistivity_values(const std::string &comm_port) {
+    /**
+     * An example Aqua Troll function that can be run
+     * @param comm_port: The comm port for the aqua troll
+     */
+    // The first step for every function is to acquire a mutex
+    // to prevent against race conditions of two threads trying to read/write to
+    // the aqua troll at the same time
+    std::unique_lock<std::mutex> lck (mtx);
+
+    // Declare the Modbus Device
+    ModbusWrapper aqua_troll_500;
+
+    /* Initialize the desired device */
+
+    // Initialize the aqua troll
+    if (aqua_troll_500.init(comm_port, "Aqua Troll 500", 1, 19200, 'E', 8, 1) == -1) {
+        std::cout << "Failed to initialize device, exiting" << std::endl;
+        return -1;
+    }
+
+    /* Logic to handle communication with the Aqua Troll */
 
     // Read parameters for resistivity
     float resistivity_value = aqua_troll_500.read_float_from_register(
@@ -156,5 +193,4 @@ int print_data_values(const std::string &comm_port) {
     std::cout << "Resistivity units id is: " << resistivity_units_id << std::endl;
 
     return 0;
-
 }

@@ -3,7 +3,11 @@
 
 int ModbusWrapper::init(const std::string &device_port, const std::string &device_name, int slave_number, int baud_rate,
                         char parity, int data_bits, int stop_bits) {
-    std::cout << "Initialize " << device_name << " modbus_wrapper protocol." << std::endl;
+
+    if (debug_statements)
+    {
+        std::cout << "Initialize " << device_name << " modbus_wrapper protocol." << std::endl;
+    }
 
     // Set device name
     device_name_ = device_name;
@@ -34,7 +38,10 @@ int ModbusWrapper::init(const std::string &device_port, const std::string &devic
     // Set the master timeout time
     modbus_set_response_timeout(mb_, 60, 0);
 
-    std::cout << "Done initializing " << device_name << "." << std::endl;
+    if (debug_statements)
+    {
+        std::cout << "Done initializing " << device_name << "." << std::endl;
+    }
 
     return 0;
 }
