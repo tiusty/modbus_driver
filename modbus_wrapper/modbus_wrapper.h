@@ -46,8 +46,7 @@ public:
      * @return 0 if success, -1 otherwise
      */
     template<size_t N>
-    int write_to_registers(int location, int number_of_registers, std::array<uint16_t, N> tab_reg)
-    {
+    int write_to_registers(int location, int number_of_registers, std::array<uint16_t, N> tab_reg) {
         // Simple check to make sure the user does not want to write values than the array size
         if (number_of_registers > tab_reg.size()) {
             std::cout << "Number of registers should be less than or equal to the length of the array" << std::endl;
@@ -56,7 +55,8 @@ public:
 
         // Attempt to write the value at the register location
         if (modbus_write_registers(mb_, location, number_of_registers, tab_reg.data()) == -1) {
-            fprintf(stderr, "Modbus Write Register fail for device %s: %s\n", device_name_.c_str(), modbus_strerror(errno));
+            fprintf(stderr, "Modbus Write Register fail for device %s: %s\n", device_name_.c_str(),
+                    modbus_strerror(errno));
             return -1;
         }
 
@@ -71,7 +71,7 @@ public:
      * @param value The value to write
      * @return 0 if success, -1 otherwise
      */
-    int  write_to_register(int location, uint16_t value);
+    int write_to_register(int location, uint16_t value);
 
     /**
      * Reads a sequential list of registers starting at the desired address. The number of registers can be
@@ -100,9 +100,11 @@ public:
         }
 
         // Useful print statement to print out hex values of the registers
-//        for (int i=0; i < rc; i++) {
-//            printf("reg[%d]=%d (0x%X)\n", i, tab_reg[i], tab_reg[i]);
-//        }
+        if (debug_statements) {
+            for (int i = 0; i < rc; i++) {
+                printf("reg[%d]=%d (0x%X)\n", i, tab_reg[i], tab_reg[i]);
+            }
+        }
 
         return 0;
 
