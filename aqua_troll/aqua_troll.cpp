@@ -13,9 +13,11 @@
 // Each device should have a mutex if there are multiple threads running
 std::mutex mtx;
 
+// Function declarations
 void timer_start(std::function<int(const std::string &)> func, unsigned int interval, const std::string &comm_port);
 int change_temperature_units(const std::string &comm_port);
 int print_temperature_values(const std::string &comm_port);
+int print_resistivity_values(const std::string &comm_port);
 
 void run_aqua_troll_500(const std::string &comm_port) {
     /**
@@ -25,8 +27,15 @@ void run_aqua_troll_500(const std::string &comm_port) {
      *  @param comm_port: THe comm port for the aqua troll
      */
     // Start a timer function that runs on the specified frequency
+
+    // Change the temperature units of the Aqua Troll every 10 seconds
     timer_start(change_temperature_units, 10000, comm_port);
+
+    // Print out the temperature every 5 seconds
     timer_start(print_temperature_values, 5000, comm_port);
+
+    // Print out the resistivity values every 15 seconds
+    timer_start(print_resistivity_values, 15000, comm_port);
 
     // Runs forever
     while (true)
@@ -62,6 +71,8 @@ void timer_start(std::function<int(const std::string &)> func, unsigned int inte
 int print_temperature_values(const std::string &comm_port) {
     /**
      * An example Aqua Troll function that can be run
+     * Prints out the temperature values of the Aqua Troll 500
+     *
      * @param comm_port: The comm port for the aqua troll
      */
     // The first step for every function is to acquire a mutex
@@ -105,6 +116,7 @@ int print_temperature_values(const std::string &comm_port) {
 int change_temperature_units(const std::string &comm_port) {
     /**
      * An example Aqua Troll function that can be run
+     * Changes the temperature units of the Aqua Troll 500
      *
      * @param comm_port: The comm port for the aqua troll
      */
@@ -156,6 +168,7 @@ int change_temperature_units(const std::string &comm_port) {
 int print_resistivity_values(const std::string &comm_port) {
     /**
      * An example Aqua Troll function that can be run
+     * Prints out the resistivity values from the Aqua Troll 500
      * @param comm_port: The comm port for the aqua troll
      */
     // The first step for every function is to acquire a mutex
