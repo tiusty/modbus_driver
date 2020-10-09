@@ -11,6 +11,9 @@
 // Mutex to protect critical sections of code
 // This will protect against a timer for two functionalities running at the same time
 // Each device should have a mutex if there are multiple threads running
+
+// TODO move the unique lock into the timer start in a scope section
+// { unique_lock; func() }
 std::mutex mtx;
 
 // Function declarations

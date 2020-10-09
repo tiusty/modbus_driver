@@ -125,6 +125,13 @@ public:
     uint32_t read_ushort_from_register(int address);
 
     /**
+     *
+     */
+    int save_to_file(uint16_t value, const std::string& file_name);
+     int save_to_file(uint32_t value, const std::string& file_name);
+     int save_to_file(float value);
+
+    /**
      * Create the default constructor
      */
     ModbusWrapper() = default;
