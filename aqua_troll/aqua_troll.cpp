@@ -3,9 +3,52 @@
 //
 #include "modbus_wrapper.h"
 #include <aqua_troll_private.h>
+#include <functional>
+#include <thread>
+#include <chrono>
 
-int run_aqua_troll_500(const std::string& comm_port)
-{
+void timer_start(std::function<int(const std::string &)> func, unsigned int interval, const std::string &comm_port);
+int print_data_values(const std::string &comm_port);
+
+void run_aqua_troll_500(const std::string &comm_port) {
+    // Start a timer function that runs on the specified frequency
+    timer_start(print_data_values, 1000, comm_port);
+
+    // Runs forever
+    while (true)
+        ;
+}
+
+void timer_start(std::function<int(const std::string &)> func, unsigned int interval, const std::string &comm_port) {
+    /**
+     * Runs the desired function on a specified interval
+     * The interval must be shorter than the time it takes to run the function
+     *  Otherwise the function will continuously run
+     *
+     *  @param func: The function that will run on the specified interval
+     *  @param interval: The interval in milliseconds that the function should run on
+     *  @param comm_port: The comm port that the device is on
+     */
+    std::thread([func, interval, comm_port]() {
+                    while (true) {
+                        // Determine the end time of the interval before the function is run, so the function
+                        //  run time doesn't affect when the function will run next
+                        auto x = std::chrono::steady_clock::now() + std::chrono::milliseconds(interval);
+
+                        // Run the Aqua Troll Function
+//                        func(comm_port);
+
+                        // Sleep until the interval is over
+                        std::this_thread::sleep_until(x);
+                    }
+                }
+    ).detach();
+}
+
+int print_data_values(const std::string &comm_port) {
+    /**
+     * An example Aqua Troll function that can be run
+     */
     // Declare the Modbus Device
     ModbusWrapper aqua_troll_500;
 
@@ -38,8 +81,7 @@ int run_aqua_troll_500(const std::string& comm_port)
     // Now change the units of temperature
     std::cout << "Changing Units of Temperature" << std::endl;
     std::array<uint16_t, 1> new_temp_units = {1};
-    if (temp_units == 1)
-    {
+    if (temp_units == 1) {
         new_temp_units.at(0) = 2;
     }
     aqua_troll_500.write_to_registers(aqua_troll::calculate_address(aqua_troll::parameter_name::temperature,
@@ -75,5 +117,5 @@ int run_aqua_troll_500(const std::string& comm_port)
     std::cout << "Resistivity units id is: " << resistivity_units_id << std::endl;
 
     return 0;
-}
 
+}

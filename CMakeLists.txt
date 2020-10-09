@@ -6,6 +6,7 @@ project(modbus_driver
 # Set standard to c++17
 set(CMAKE_CXX_STANDARD 17)
 
+# Find the threads package
 find_package (Threads)
 
 # Add the modbus wrapper
