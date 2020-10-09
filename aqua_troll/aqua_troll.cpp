@@ -6,13 +6,27 @@
 #include <functional>
 #include <thread>
 #include <chrono>
+#include <mutex>
+
+// Mutex to protect critical sections of code
+// This will protect against a timer for two functionalities running at the same time
+// Each device should have a mutex if there are multiple threads running
+std::mutex mtx;
 
 void timer_start(std::function<int(const std::string &)> func, unsigned int interval, const std::string &comm_port);
 int print_data_values(const std::string &comm_port);
+int print_temperature_values(const std::string &comm_port);
 
 void run_aqua_troll_500(const std::string &comm_port) {
+    /**
+     * The entry function for the aqua troll functionality
+     *  All aqua troll functionality should be called here
+     *
+     *  @param comm_port: THe comm port for the aqua troll
+     */
     // Start a timer function that runs on the specified frequency
-    timer_start(print_data_values, 1000, comm_port);
+    timer_start(print_data_values, 4000, comm_port);
+    timer_start(print_temperature_values, 3000, comm_port);
 
     // Runs forever
     while (true)
@@ -36,7 +50,7 @@ void timer_start(std::function<int(const std::string &)> func, unsigned int inte
                         auto x = std::chrono::steady_clock::now() + std::chrono::milliseconds(interval);
 
                         // Run the Aqua Troll Function
-//                        func(comm_port);
+                        func(comm_port);
 
                         // Sleep until the interval is over
                         std::this_thread::sleep_until(x);
@@ -45,10 +59,35 @@ void timer_start(std::function<int(const std::string &)> func, unsigned int inte
     ).detach();
 }
 
+int print_temperature_values(const std::string &comm_port) {
+    /**
+     * An example Aqua Troll function that can be run
+     * @param comm_port: The comm port for the aqua troll
+     */
+    // The first step for every function is to acquire a mutex
+    // to prevent against race conditions of two threads trying to read/write to
+    // the aqua troll at the same time
+    std::unique_lock<std::mutex> lck (mtx);
+
+    std::cout << "Thread 2" <<std::endl;
+    auto x = std::chrono::steady_clock::now() + std::chrono::milliseconds(1000);
+    std::this_thread::sleep_until(x);
+    std::cout << "End Thread 2" << std::endl;
+
+    return 0;
+}
+
 int print_data_values(const std::string &comm_port) {
     /**
      * An example Aqua Troll function that can be run
+     *
+     * @param comm_port: The comm port for the aqua troll
      */
+     // The first step for every function is to acquire a mutex
+     // to prevent against race conditions of two threads trying to read/write to
+     // the aqua troll at the same time
+    std::unique_lock<std::mutex> lck (mtx);
+
     // Declare the Modbus Device
     ModbusWrapper aqua_troll_500;
 
