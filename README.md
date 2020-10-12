@@ -23,7 +23,7 @@ WSL = (Windows Subsystem for Linux)
     1. Just search Ubuntu on the Windows start menu
 1. Setup SSH keys (maybe optional)
     1. https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
-1. Clone the repo to the desired directly
+1. Clone the repo to the desired directory
     1. cd to desired directory
     2. clone the repo
         ``` git clone git@github.com:tiusty/modbus_driver.git ```
