@@ -122,7 +122,7 @@ public:
     float read_float_from_register(int address);
 
     /**
-     * This function is used to read a ushort (usigned 16 bit) register
+     * This function is used to read a ushort (unsigned 16 bit) register
      * @param address The address to read from
      * @return The ushort value
      */
@@ -196,7 +196,7 @@ private:
     bool debug_statements = false;
 
     /**
-     * Sets the debug level based on the debug_statment boolean value
+     * Sets the debug level based on the debug_statement boolean value
      */
     void set_debug_level();
 };

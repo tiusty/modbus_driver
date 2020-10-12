@@ -14,7 +14,7 @@ int ModbusWrapper::init(const std::string &device_port, const std::string &devic
 
     // Create the new modbus_wrapper device
     mb_ = modbus_new_rtu(device_port.c_str(), baud_rate, parity, data_bits, stop_bits);
-    if (mb_ == NULL) {
+    if (mb_ == nullptr) {
         fprintf(stderr, "Failed to create new rtu device for device %s: \n", device_name_.c_str());
         return -1;
     }

@@ -9,11 +9,8 @@
 #include <mutex>
 
 // Mutex to protect critical sections of code
-// This will protect against a timer for two functionalities running at the same time
-// Each device should have a mutex if there are multiple threads running
-
-// TODO move the unique lock into the timer start in a scope section
-// { unique_lock; func() }
+// Every function that is running should acquire the lock
+//  to prevent race conditions.
 std::mutex mtx;
 
 // Function declarations
@@ -60,6 +57,11 @@ void timer_start(std::function<int(const std::string &)> func, unsigned int inte
      * The interval must be shorter than the time it takes to run the function
      *  Otherwise the function will continuously run
      *
+     *  Note: This timer function acquires the mutex as part of the timer function
+     *      so the functions that use the timer should not try to attempt to
+     *      acquire the lock as well, otherwise it will cause a deadlock since
+     *      it already acquired the lock
+     *
      *  @param func: The function that will run on the specified interval
      *  @param interval: The interval in milliseconds that the function should run on
      *  @param comm_port: The comm port that the device is on
@@ -75,7 +77,7 @@ void timer_start(std::function<int(const std::string &)> func, unsigned int inte
                         // This prevents race conditions between two or more timer functions
                         // executing at the same time
                         {
-                            // The first step every iteration is to aquire the mutex
+                            // The first step every iteration is to acquire the mutex
                             // to prevent against race conditions of two or more threads trying to read/write to
                             // the aqua troll at the same time
                             std::unique_lock<std::mutex> lck (mtx);
@@ -98,6 +100,7 @@ int print_temperature_values(const std::string &comm_port) {
      *
      * @param comm_port: The comm port for the aqua troll
      */
+    /* Initialize the desired device */
 
     // Declare the Modbus Device
     ModbusWrapper aqua_troll_500;
