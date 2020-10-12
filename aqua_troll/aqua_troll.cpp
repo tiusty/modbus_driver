@@ -14,7 +14,7 @@
 std::mutex mtx;
 
 // Function declarations
-void timer_start(std::function<int(const std::string &)> func, unsigned int interval, const std::string &comm_port);
+void timer_start(const std::function<int(const std::string &)>& func, unsigned int interval, const std::string &comm_port);
 int change_temperature_units(const std::string &comm_port);
 int print_temperature_values(const std::string &comm_port);
 int print_resistivity_values(const std::string &comm_port);
@@ -51,7 +51,7 @@ void run_aqua_troll_500(const std::string &comm_port) {
         ;
 }
 
-void timer_start(std::function<int(const std::string &)> func, unsigned int interval, const std::string &comm_port) {
+void timer_start(const std::function<int(const std::string &)>& func, unsigned int interval, const std::string &comm_port) {
     /**
      * Runs the desired function on a specified interval
      * The interval must be shorter than the time it takes to run the function
