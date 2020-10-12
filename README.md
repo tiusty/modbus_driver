@@ -20,6 +20,7 @@ WSL = (Windows Subsystem for Linux)
 
 ## Build+Run the executable
 1. Open an Ubuntu terminal
+    1. Just search Ubuntu on the Windows start menu
 1. Setup SSH keys (maybe optional)
     1. https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
 1. Clone the repo to the desired directly
