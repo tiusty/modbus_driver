@@ -25,7 +25,7 @@ namespace aqua_troll {
         constexpr int value = 0;
         constexpr int data_quality = 2;
         constexpr int units_id = 3;
-        constexpr int parameter_id = 4;
+        constexpr int parameter_id = 5;
         constexpr int offline_sentinel_value = 5;
     }
 

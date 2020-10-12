@@ -1,7 +1,3 @@
-//
-// Created by Alex on 9/27/2020.
-//
-
 #include "arduino.h"
 #include "modbus_wrapper.h"
 
@@ -17,12 +13,12 @@ namespace device {
     constexpr int stop_bits = 1;
 }
 
-int run_arduino(const std::string& comm_port)
-{
+int run_arduino(const std::string &comm_port) {
     ModbusWrapper arduino;
 
     // Initial the Arduino
-    if (arduino.init(comm_port, device::name, device::slave_number, device::baud_rate, device::parity, device::data_bits, device::stop_bits) == -1) {
+    if (arduino.init(comm_port, device::name, device::slave_number, device::baud_rate, device::parity,
+                     device::data_bits, device::stop_bits) == -1) {
         std::cout << "Failed to initialize device " << device::name << ", exiting" << std::endl;
         return -1;
     }

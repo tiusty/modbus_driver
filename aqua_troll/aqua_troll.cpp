@@ -11,9 +11,13 @@
 std::mutex mtx;
 
 // Function declarations
-void timer_start(const std::function<int(const std::string &)>& func, unsigned int interval, const std::string &comm_port);
+void
+timer_start(const std::function<int(const std::string &)> &func, unsigned int interval, const std::string &comm_port);
+
 int change_temperature_units(const std::string &comm_port);
+
 int print_temperature_values(const std::string &comm_port);
+
 int print_resistivity_values(const std::string &comm_port);
 
 
@@ -57,11 +61,11 @@ void run_aqua_troll_500(const std::string &comm_port) {
     timer_start(print_resistivity_values, 15000, comm_port);
 
     // Runs forever
-    while (true)
-        ;
+    while (true);
 }
 
-void timer_start(const std::function<int(const std::string &)>& func, unsigned int interval, const std::string &comm_port) {
+void
+timer_start(const std::function<int(const std::string &)> &func, unsigned int interval, const std::string &comm_port) {
     /**
      * Runs the desired function on a specified interval
      * The interval must be shorter than the time it takes to run the function
@@ -89,7 +93,7 @@ void timer_start(const std::function<int(const std::string &)>& func, unsigned i
                             // The first step every iteration is to acquire the mutex
                             // to prevent against race conditions of two or more threads trying to read/write to
                             // the aqua troll at the same time
-                            std::unique_lock<std::mutex> lck (mtx);
+                            std::unique_lock<std::mutex> lck(mtx);
 
                             // Run the Aqua Troll Function
                             func(comm_port);
@@ -116,7 +120,8 @@ int print_temperature_values(const std::string &comm_port) {
     ModbusWrapper aqua_troll_500;
 
     // Initialize the aqua troll
-    if (aqua_troll_500.init(comm_port, device::name, device::slave_number, device::baud_rate, device::parity, device::data_bits, device::stop_bits) == -1) {
+    if (aqua_troll_500.init(comm_port, device::name, device::slave_number, device::baud_rate, device::parity,
+                            device::data_bits, device::stop_bits) == -1) {
         std::cout << "Failed to initialize device " << device::name << ", exiting" << std::endl;
         return -1;
     }
@@ -161,7 +166,8 @@ int change_temperature_units(const std::string &comm_port) {
     ModbusWrapper aqua_troll_500;
 
     // Initialize the aqua troll
-    if (aqua_troll_500.init(comm_port, device::name, device::slave_number, device::baud_rate, device::parity, device::data_bits, device::stop_bits) == -1) {
+    if (aqua_troll_500.init(comm_port, device::name, device::slave_number, device::baud_rate, device::parity,
+                            device::data_bits, device::stop_bits) == -1) {
         std::cout << "Failed to initialize device " << device::name << ", exiting" << std::endl;
         return -1;
     }
@@ -210,7 +216,8 @@ int print_resistivity_values(const std::string &comm_port) {
     /* Initialize the desired device */
 
     // Initialize the aqua troll
-    if (aqua_troll_500.init(comm_port, device::name, device::slave_number, device::baud_rate, device::parity, device::data_bits, device::stop_bits) == -1) {
+    if (aqua_troll_500.init(comm_port, device::name, device::slave_number, device::baud_rate, device::parity,
+                            device::data_bits, device::stop_bits) == -1) {
         std::cout << "Failed to initialize device " << device::name << ", exiting" << std::endl;
         return -1;
     }

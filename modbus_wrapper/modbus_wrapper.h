@@ -135,20 +135,18 @@ public:
      * @param value: The value to save to the file
      * @param file_name: The name of the file to save to
      */
-     template<typename T>
-     int save_to_file(T value, const std::string& file_name)
-    {
-         // Open the file for writing and select the append mode
-        std::ofstream my_file (file_name, std::ofstream::app);
+    template<typename T>
+    int save_to_file(T value, const std::string &file_name) {
+        // Open the file for writing and select the append mode
+        std::ofstream my_file(file_name, std::ofstream::app);
 
         // Attempt to open the file
-        if (my_file.is_open())
-        {
+        if (my_file.is_open()) {
             // current date/time based on current system
             time_t now = std::time(nullptr);
 
             // convert now to string form
-            char* dt = std::ctime(&now);
+            char *dt = std::ctime(&now);
             std::string datetime(dt);
 
             // Remove the new line
