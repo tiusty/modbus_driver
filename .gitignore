@@ -1,2 +1,3 @@
 # Removes the cmake build files
 /cmake-build-debug/
+/build/

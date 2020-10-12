@@ -1,4 +1,6 @@
 # Compiling for WSL 
+
+## Setting up environment
 WSL = (Windows Subsystem for Linux)
 
 1. Install WSl from the Microsoft store in Windows 10.
@@ -10,12 +12,30 @@ WSL = (Windows Subsystem for Linux)
 4. Install necessary tools:
     1. ```
         sudo apt-get update
-        sudo apt-get install cmake gcc clang gdb build-essential
+        sudo apt-get install cmake gcc clang gdb build-essential git
        ```
 5. Install libmodbus
     1. ``` sudo apt-get install libmodbus-dev```  
 6. Now the modbus library should be installed and the program can be compiled/run
 
+## Build+run the executable
+1. Setup SSH keys (maybe optional)
+    1. https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+1. Clone the repo to the desired directly
+    1. cd to desired directory
+    2. clone the repo
+        ``` git clone git@github.com:tiusty/modbus_driver.git ```
+    3. Go to project root
+        ```cd modbus_driver/```
+        
+2. Build+run the executable
+    1. ``` 
+        mkdir build
+        cd build
+        cmake ..
+        make
+        ./modbus_driver
+        ```
 
 ## Notes
 When running from WSL on a windows 10 machine, the com ports are accessible via WSl.   
