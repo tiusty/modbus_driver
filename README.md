@@ -3,7 +3,7 @@
 ## Setting up environment
 WSL = (Windows Subsystem for Linux)
 
-1. Install WSl from the Microsoft store in Windows 10.
+1. Install WSL from the Microsoft store in Windows 10.
     1. You can find it [here](https://www.microsoft.com/en-us/p/ubuntu/9nblggh4msv6?activetab=pivot:overviewtab)
 2. Open Windows Power Shell as Administrator and run:
     1. Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
@@ -18,7 +18,7 @@ WSL = (Windows Subsystem for Linux)
     1. ``` sudo apt-get install libmodbus-dev```  
 6. Now the modbus library should be installed and the program can be compiled/run
 
-## Build+run the executable
+## Build+Run the executable
 1. Setup SSH keys (maybe optional)
     1. https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
 1. Clone the repo to the desired directly
