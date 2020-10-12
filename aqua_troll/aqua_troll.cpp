@@ -26,8 +26,9 @@ int print_resistivity_values(const std::string &comm_port);
  * Various file_names to store values to
  */
 namespace file_names {
-    constexpr char temp_units_file[] = "temperature_units.txt";
-    constexpr char temp_value_file[] = "temperature_values.txt";
+    constexpr char temperature_units[] = "temperature_units.txt";
+    constexpr char temperature_value[] = "temperature_values.txt";
+    constexpr char resistivity_value[] = "resistivity_values.txt";
 }
 
 void run_aqua_troll_500(const std::string &comm_port) {
@@ -69,8 +70,19 @@ void timer_start(std::function<int(const std::string &)> func, unsigned int inte
                         //  run time doesn't affect when the function will run next
                         auto x = std::chrono::steady_clock::now() + std::chrono::milliseconds(interval);
 
-                        // Run the Aqua Troll Function
-                        func(comm_port);
+                        // These curly braces are essential to make sure the mutex
+                        //  goes out of scope when the function finishes executing
+                        // This prevents race conditions between two or more timer functions
+                        // executing at the same time
+                        {
+                            // The first step every iteration is to aquire the mutex
+                            // to prevent against race conditions of two or more threads trying to read/write to
+                            // the aqua troll at the same time
+                            std::unique_lock<std::mutex> lck (mtx);
+
+                            // Run the Aqua Troll Function
+                            func(comm_port);
+                        }
 
                         // Sleep until the interval is over
                         std::this_thread::sleep_until(x);
@@ -86,15 +98,9 @@ int print_temperature_values(const std::string &comm_port) {
      *
      * @param comm_port: The comm port for the aqua troll
      */
-    // The first step for every function is to acquire a mutex
-    // to prevent against race conditions of two threads trying to read/write to
-    // the aqua troll at the same time
-    std::unique_lock<std::mutex> lck (mtx);
 
     // Declare the Modbus Device
     ModbusWrapper aqua_troll_500;
-
-    /* Initialize the desired device */
 
     // Initialize the aqua troll
     if (aqua_troll_500.init(comm_port, "Aqua Troll 500", 1, 19200, 'E', 8, 1) == -1) {
@@ -121,7 +127,7 @@ int print_temperature_values(const std::string &comm_port) {
     std::cout << "Temperature value is: " << temp_value << " " << temp_units_str << std::endl;
 
     // Store the new temperature value in the file
-    aqua_troll_500.save_to_file(temp_value, file_names::temp_value_file);
+    aqua_troll_500.save_to_file(temp_value, file_names::temperature_value);
 
 
     return 0;
@@ -134,10 +140,6 @@ int change_temperature_units(const std::string &comm_port) {
      *
      * @param comm_port: The comm port for the aqua troll
      */
-     // The first step for every function is to acquire a mutex
-     // to prevent against race conditions of two threads trying to read/write to
-     // the aqua troll at the same time
-    std::unique_lock<std::mutex> lck (mtx);
 
     // Declare the Modbus Device
     ModbusWrapper aqua_troll_500;
@@ -176,7 +178,7 @@ int change_temperature_units(const std::string &comm_port) {
     std::cout << "Temperature units are now in " << temp_units_str << std::endl;\
 
     // Store the the new unit in the desired file
-    aqua_troll_500.save_to_file(temp_units, file_names::temp_units_file);
+    aqua_troll_500.save_to_file(temp_units, file_names::temperature_units);
 
     return 0;
 
@@ -188,11 +190,6 @@ int print_resistivity_values(const std::string &comm_port) {
      * Prints out the resistivity values from the Aqua Troll 500
      * @param comm_port: The comm port for the aqua troll
      */
-    // The first step for every function is to acquire a mutex
-    // to prevent against race conditions of two threads trying to read/write to
-    // the aqua troll at the same time
-    std::unique_lock<std::mutex> lck (mtx);
-
     // Declare the Modbus Device
     ModbusWrapper aqua_troll_500;
 
@@ -221,6 +218,9 @@ int print_resistivity_values(const std::string &comm_port) {
             aqua_troll::calculate_address(aqua_troll::parameter_name::resistivity,
                                           aqua_troll::parameter_points::units_id));
     std::cout << "Resistivity units id is: " << resistivity_units_id << std::endl;
+
+    // Store the the new value in the desired file
+    aqua_troll_500.save_to_file(resistivity_value, file_names::resistivity_value);
 
     return 0;
 }
