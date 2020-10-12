@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <array>
+#include <fstream>
 
 class ModbusWrapper {
     /**
@@ -125,11 +126,36 @@ public:
     uint32_t read_ushort_from_register(int address);
 
     /**
+     * Saves the given value to the desired file.
+     *  This will append the value to the end of the file
      *
+     * @param value: The value to save to the file
+     * @param file_name: The name of the file to save to
      */
-    int save_to_file(uint16_t value, const std::string& file_name);
-     int save_to_file(uint32_t value, const std::string& file_name);
-     int save_to_file(float value);
+     template<typename T>
+     int save_to_file(T value, const std::string& file_name)
+    {
+         // Open the file for writing and select the append mode
+        std::ofstream my_file (file_name, std::ofstream::app);
+
+        // Attempt to open the file
+        if (my_file.is_open())
+        {
+            // Save the value to the file with a newline
+            my_file << value << std::endl;
+
+            // Close the file
+            my_file.close();
+
+        } else {
+            // If the file could not be opened, return -1
+            std::cout << "Error: Could not open file." << std::endl;
+            return -1;
+        }
+
+        // Return success
+        return 0;
+    }
 
     /**
      * Create the default constructor

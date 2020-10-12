@@ -1,6 +1,5 @@
 #include "modbus_wrapper.h"
 #include <cstring>
-#include <fstream>
 
 int ModbusWrapper::init(const std::string &device_port, const std::string &device_name, int slave_number, int baud_rate,
                         char parity, int data_bits, int stop_bits) {
@@ -104,19 +103,3 @@ void ModbusWrapper::set_debug_level() {
         modbus_set_debug(mb_, FALSE);
     }
 }
-// TODO Make this a template function
-int ModbusWrapper::save_to_file(uint16_t value, const std::string& file_name)
-{
-    std::ofstream my_file (file_name);
-    if (my_file.is_open())
-    {
-        my_file << value;
-        my_file.close();
-    } else {
-        std::cout << "Error: Could not open file." << std::endl;
-        return -1;
-    }
-
-    return 0;
-}
-

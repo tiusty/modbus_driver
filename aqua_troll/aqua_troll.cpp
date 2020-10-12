@@ -22,6 +22,14 @@ int change_temperature_units(const std::string &comm_port);
 int print_temperature_values(const std::string &comm_port);
 int print_resistivity_values(const std::string &comm_port);
 
+/**
+ * Various file_names to store values to
+ */
+namespace file_names {
+    constexpr char temp_units_file[] = "temperature_units.txt";
+    constexpr char temp_value_file[] = "temperature_values.txt";
+}
+
 void run_aqua_troll_500(const std::string &comm_port) {
     /**
      * The entry function for the aqua troll functionality
@@ -112,6 +120,9 @@ int print_temperature_values(const std::string &comm_port) {
     std::string temp_units_str = temp_units == 1 ? "Celsius" : "Fahrenheit";
     std::cout << "Temperature value is: " << temp_value << " " << temp_units_str << std::endl;
 
+    // Store the new temperature value in the file
+    aqua_troll_500.save_to_file(temp_value, file_names::temp_value_file);
+
 
     return 0;
 }
@@ -162,7 +173,10 @@ int change_temperature_units(const std::string &comm_port) {
     std::string temp_units_str = temp_units == 1 ? "Celsius" : "Fahrenheit";
 
     // Print out the new units of temperature
-    std::cout << "Temperature units are now in " << temp_units_str << std::endl;
+    std::cout << "Temperature units are now in " << temp_units_str << std::endl;\
+
+    // Store the the new unit in the desired file
+    aqua_troll_500.save_to_file(temp_units, file_names::temp_units_file);
 
     return 0;
 
