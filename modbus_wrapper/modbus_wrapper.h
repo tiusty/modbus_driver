@@ -3,9 +3,12 @@
 
 #include <modbus/modbus.h>
 #include <string>
+#include <algorithm>
 #include <iostream>
 #include <array>
 #include <fstream>
+#include <ctime>
+
 
 class ModbusWrapper {
     /**
@@ -141,8 +144,18 @@ public:
         // Attempt to open the file
         if (my_file.is_open())
         {
-            // Save the value to the file with a newline
-            my_file << value << std::endl;
+            // current date/time based on current system
+            time_t now = std::time(nullptr);
+
+            // convert now to string form
+            char* dt = std::ctime(&now);
+            std::string datetime(dt);
+
+            // Remove the new line
+            datetime.erase(std::remove(datetime.begin(), datetime.end(), '\n'), datetime.end());
+
+            // Save the value with the timestamp to the file with a newline
+            my_file << datetime << ": " << value << std::endl;
 
             // Close the file
             my_file.close();
