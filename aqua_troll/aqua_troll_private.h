@@ -12,7 +12,7 @@ namespace aqua_troll {
      * The parameters points are the 7 registers associated with each parameter.
      * These are taken from page 37 of the aqua troll 500 manual
      *
-     * NOte: When writing to Aqua Troll values, must use function code 16 (write to registers)
+     * Note: When writing to Aqua Troll values, must use function code 16 (write to registers)
      *  I.e don't use the write_to_register function, use the write_to_registers function with array size 1
      *
      * value (R) (float) -> The measured value from the sensor
