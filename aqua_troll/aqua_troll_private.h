@@ -8,6 +8,22 @@
  *  to access register location for each parameter/sensor
  */
 namespace aqua_troll {
+
+    /**
+     * Device parameters for the aqua troll 500
+     *  Values are specified from the documentation
+     */
+    namespace device {
+        // This is just a user friendly name for logging
+        //  this is not from the documentation
+        constexpr char name[] = "Aqua Troll 500";
+        constexpr int slave_number = 1;
+        constexpr int baud_rate = 19200;
+        constexpr char parity = 'E';
+        constexpr int data_bits = 8;
+        constexpr int stop_bits = 1;
+    }
+
     /**
      * The parameters points are the 7 registers associated with each parameter.
      * These are taken from page 37 of the aqua troll 500 manual
