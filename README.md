@@ -29,8 +29,9 @@ WSL = (Windows Subsystem for Linux)
         ``` git clone git@github.com:tiusty/modbus_driver.git ```
     3. Go to project root
         ```cd modbus_driver/```
+2. Make sure to update the comm ports in main.cpp
         
-2. Build+run the executable
+3. Build+run the executable
     1. ``` 
         mkdir build
         cd build
