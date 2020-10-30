@@ -49,7 +49,7 @@ void run_aqua_troll_500(const std::string &comm_port) {
      * The entry function for the aqua troll functionality
      *  All aqua troll functionality should be called here
      *
-     *  @param comm_port: THe comm port for the aqua troll
+     *  @param comm_port: The comm port for the aqua troll
      */
     // Change the temperature units of the Aqua Troll every 10 seconds
     timer_start(change_temperature_units, 10000, comm_port);
