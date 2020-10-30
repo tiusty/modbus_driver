@@ -123,16 +123,16 @@ int print_temperature_values(const std::string &comm_port) {
     // Read parameters for temperature
     float temp_value = aqua_troll_500.read_float_from_register(
             calculate_address(parameter_name::temperature,
-                                          parameter_points::value));
+                              parameter_points::value));
 
     uint16_t temp_data_quality = aqua_troll_500.read_ushort_from_register(
             calculate_address(parameter_name::temperature,
-                                          parameter_points::data_quality));
+                              parameter_points::data_quality));
     std::cout << "Temperature data quality is " << temp_data_quality << std::endl;
 
     uint16_t temp_units = aqua_troll_500.read_ushort_from_register(
             calculate_address(parameter_name::temperature,
-                                          parameter_points::units_id));
+                              parameter_points::units_id));
     std::string temp_units_str = temp_units == 1 ? "Celsius" : "Fahrenheit";
     std::cout << "Temperature value is: " << temp_value << " " << temp_units_str << std::endl;
 
@@ -169,7 +169,7 @@ int change_temperature_units(const std::string &comm_port) {
     // Read temperature units
     uint16_t temp_units = aqua_troll_500.read_ushort_from_register(
             calculate_address(parameter_name::temperature,
-                                          parameter_points::units_id));
+                              parameter_points::units_id));
 
     // Now change the units of temperature
     std::array<uint16_t, 1> new_temp_units = {1};
@@ -177,13 +177,13 @@ int change_temperature_units(const std::string &comm_port) {
         new_temp_units.at(0) = 2;
     }
     aqua_troll_500.write_to_registers(calculate_address(parameter_name::temperature,
-                                                                    parameter_points::units_id),
+                                                        parameter_points::units_id),
                                       1,
                                       new_temp_units);
 
     temp_units = aqua_troll_500.read_ushort_from_register(
             calculate_address(parameter_name::temperature,
-                                          parameter_points::units_id));
+                              parameter_points::units_id));
     std::string temp_units_str = temp_units == 1 ? "Celsius" : "Fahrenheit";
 
     // Print out the new units of temperature
@@ -219,17 +219,17 @@ int print_resistivity_values(const std::string &comm_port) {
     // Read parameters for resistivity
     float resistivity_value = aqua_troll_500.read_float_from_register(
             calculate_address(parameter_name::resistivity,
-                                          parameter_points::value));
+                              parameter_points::value));
     std::cout << "Resistivity value is: " << resistivity_value << std::endl;
 
     uint16_t resistivity_data_quality = aqua_troll_500.read_ushort_from_register(
             calculate_address(parameter_name::resistivity,
-                                          parameter_points::data_quality));
+                              parameter_points::data_quality));
     std::cout << "Resistivity data quality is " << resistivity_data_quality << std::endl;
 
     uint16_t resistivity_units_id = aqua_troll_500.read_ushort_from_register(
             calculate_address(parameter_name::resistivity,
-                                          parameter_points::units_id));
+                              parameter_points::units_id));
     std::cout << "Resistivity units id is: " << resistivity_units_id << std::endl;
 
     // Store the the new value in the desired file
