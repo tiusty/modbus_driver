@@ -178,6 +178,16 @@ public:
      */
     ~ModbusWrapper();
 
+    /**
+     * Delete copy and move constructors since they shouldn't be moved or copied
+     *
+     * This can be added back later if it is desired
+     */
+    ModbusWrapper(const ModbusWrapper& other) = delete;
+    ModbusWrapper& operator=(const ModbusWrapper& other) = delete;
+    ModbusWrapper(ModbusWrapper&& other) = delete;
+    ModbusWrapper& operator=(ModbusWrapper&& other) = delete;
+
 private:
     /**
      * Stores the name of the device
