@@ -1,3 +1,6 @@
 # Removes the cmake build files
 /cmake-build-debug/
 /build/
+/resistivity_values.txt
+/temperature_units.txt
+/temperature_values.txt
