@@ -12,7 +12,7 @@ WSL = (Windows Subsystem for Linux)
 4. Install necessary tools:
     1. ```
         sudo apt-get update
-        sudo apt-get install cmake gcc clang gdb build-essential git
+        sudo apt-get install cmake gcc clang gdb build-essential git libgtest-dev
        ```
 5. Install libmodbus
     1. ``` sudo apt-get install libmodbus-dev```  

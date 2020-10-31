@@ -39,10 +39,7 @@ endif()
 enable_testing()
 
 # Create the test executable
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} main.cpp test_modbus_wrapper.cpp)
 
 # Link necessary libraries
 target_link_libraries(${PROJECT_NAME} gtest gtest_main pthread modbus_wrapper)
-
-# Run the tests
-add_test(NAME test_modbus_wrapper COMMAND test_modbus_wrapper)
