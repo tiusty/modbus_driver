@@ -24,8 +24,6 @@ int print_temperature_values(const std::string &comm_port);
 int print_resistivity_values(const std::string &comm_port);
 
 
-
-
 /**
  * Various file_names to store values to
  */
