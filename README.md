@@ -39,6 +39,17 @@ WSL = (Windows Subsystem for Linux)
         make
         ./modbus_driver
         ```
+        
+## Hardware
+
+### Aqua Troll 500
+1. Make sure the power supply is specfied for 12v
+2. Connect the stripped + tin cable to the Aqua troll and on the other side plug in the USB to RS485 converter into the PC. Then plug in the 12v power supply into the power port. 
+
+### Arduino
+1. Wire up the Arduino as specified in this website: https://circuitdigest.com/microcontroller-projects/rs485-modbus-serial-communication-using-arduino-uno-as-slave
+2. Connect the USB to RS485 to the computer
+3. Program the Arduino with the specified code
 
 ## Notes
 When running from WSL on a windows 10 machine, the com ports are accessible via WSl.   
