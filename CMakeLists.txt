@@ -16,6 +16,9 @@ add_subdirectory(modbus_wrapper)
 add_subdirectory(aqua_troll)
 add_subdirectory(arduino)
 
+# Testing directory
+add_subdirectory(tests)
+
 # Create the main executable
 add_executable(${PROJECT_NAME} main.cpp)
 

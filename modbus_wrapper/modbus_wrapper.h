@@ -188,6 +188,16 @@ public:
     ModbusWrapper(ModbusWrapper&& other) = delete;
     ModbusWrapper& operator=(ModbusWrapper&& other) = delete;
 
+    /**
+     * Sets the debug level based on the debug_statement boolean value
+     */
+    void set_debug_level();
+
+    /**
+     * Determines if modbus_wrapper debug statements are printed
+     */
+    bool debug_statements = false;
+
 private:
     /**
      * Stores the name of the device
@@ -198,15 +208,6 @@ private:
      */
     modbus_t *mb_ = nullptr;
 
-    /**
-     * Determines if modbus_wrapper debug statements are printed
-     */
-    bool debug_statements = false;
-
-    /**
-     * Sets the debug level based on the debug_statement boolean value
-     */
-    void set_debug_level();
 };
 
 
