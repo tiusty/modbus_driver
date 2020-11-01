@@ -42,4 +42,4 @@ enable_testing()
 add_executable(${PROJECT_NAME} main.cpp test_modbus_wrapper.cpp)
 
 # Link necessary libraries
-target_link_libraries(${PROJECT_NAME} gtest gtest_main pthread modbus_wrapper)
+target_link_libraries(${PROJECT_NAME} gmock_main  pthread modbus_wrapper)

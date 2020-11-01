@@ -1,5 +1,5 @@
-#include "gtest/gtest.h"
 #include "modbus_wrapper.h"
+#include "gmock/gmock.h"
 
 TEST(test_set_debug_level, set_true) {
     //Arrange

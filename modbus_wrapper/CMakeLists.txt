@@ -7,7 +7,7 @@ project(modbus_wrapper
 # Create the modbus wrapper library
 add_library(${PROJECT_NAME}
         modbus_wrapper.cpp modbus_wrapper.h
-        )
+        modbus_interface.cpp modbus_interface.h modbus.cpp modbus.h)
 
 # Link the necessary libraries
 target_link_libraries(${PROJECT_NAME}

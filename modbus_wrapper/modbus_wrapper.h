@@ -2,6 +2,7 @@
 #define MODBUS_DRIVER_MODBUS_WRAPPER_H
 
 #include <modbus/modbus.h>
+#include "modbus.h"
 #include <string>
 #include <algorithm>
 #include <iostream>
@@ -207,6 +208,12 @@ private:
      * Pointer to modbus_wrapper structure
      */
     modbus_t *mb_ = nullptr;
+
+    /**
+     * Interface to modbus functionality
+     */
+    Modbus modbus_;
+
 
 };
 

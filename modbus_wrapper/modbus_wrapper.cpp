@@ -96,8 +96,8 @@ void ModbusWrapper::set_debug_level() {
 
     // This can be uncommented if debug statements are desired for modbus_wrapper,
     if (debug_statements) {
-        modbus_set_debug(mb_, TRUE);
+        modbus_.set_debug(mb_, TRUE);
     } else {
-        modbus_set_debug(mb_, FALSE);
+        modbus_.set_debug(mb_, FALSE);
     }
 }
